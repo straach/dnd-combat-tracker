@@ -1,0 +1,17 @@
+@import '~antd/dist/antd.css';
+body, #root {
+  height: 100vh;
+  background-color: #BEC7C7;
+  font-family: 'Noto Sans', 'Myriad Pro', Calibri, Helvetica, Arial, sans-serif;
+}
+
+.header {
+  height: 60px;
+  background-color: #06111C;
+  color: #fff;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 15px;
+}
+
+.ant-popover-inner-content {
+  padding: 0 !important;
+}
