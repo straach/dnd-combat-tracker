@@ -1,37 +1,27 @@
+import { Col, Input, Row } from 'antd';
 import React, { useEffect, useState } from 'react';
-import useLocalStorage from '../hooks/useLocalStorageHook';
-import IDnd5eApiReference from '../models/IDnd5eApiReference';
-import IMonster from '../models/IMonster';
-import { BsBoxArrowLeft } from 'react-icons/bs';
-import { IoMdListBox } from "react-icons/io";
-import { getAllMonsters } from '../resources/dndapi';
-import { AutoComplete, Input, InputNumber, Button, Row, Col, Popover } from 'antd';
-import styled from 'styled-components';
 import IBaseMonster from '../models/IBaseMonster';
-import StatsBlockWide from './StatsBlockWide';
+import { getAllMonsters } from '../resources/dndapi';
+import MonsterItem from './MonsterItem';
+import styled, { StyledComponent } from 'styled-components';
+import IMonster from '../models/IMonster';
 
-const BasicMonsterDiv = styled.div`
-    background-color: white;
-    width: 80%;
+const MonsterListBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: flex-start;
+    align-items: flex-start;
+    height: 100%;
+    overflow: auto;
 `;
 
-interface IBasicMonsterItemProps {
-    monster: IBaseMonster;
-}
-const BasicMonsterItem = ({ monster }: IBasicMonsterItemProps) => {
-    return <BasicMonsterDiv>
-        <Button onClick={() => { }} ><BsBoxArrowLeft size={30} /></Button>
-        {monster.name} {monster.size} {monster.type} {monster.hit_points}
-        <Popover content={<StatsBlockWide />}>
-            <IoMdListBox />
-        </Popover>
-    </BasicMonsterDiv>
+interface IMonsterListProps {
+    onJoinEncounter: (monsters: IMonster[]) => void;
 }
 
-export interface IMonsterListProps {
-}
-
-export function MonsterList(props: IMonsterListProps) {
+export function MonsterList({ onJoinEncounter }: IMonsterListProps) {
     const [allMonstersOverview, setAllMonsterOverview] = useState<IBaseMonster[]>([]);
     const [filter, setFilter] = useState<string>('');
 
@@ -45,14 +35,17 @@ export function MonsterList(props: IMonsterListProps) {
         <Row>
             <Col >
                 <Input value={filter} onChange={event => setFilter(event.target.value)} />
-
             </Col>
         </Row>
 
-        <Row style={{ height: '100%' }}>
-            <Col span={24} style={{ height: '100%', overflow: 'auto' }}>{allMonstersOverview
+        <Row justify="center" style={{ height: '100%', overflow: 'auto' }}>
+            <Col span={22}>{allMonstersOverview
                 .filter(monster => monster.name.toLowerCase().indexOf(filter.toLowerCase()) > -1)
-                .map(monster => <BasicMonsterItem monster={monster} />)}
+                .map((monster, index) => <MonsterItem
+                    key={`${monster.name}${index}`}
+                    monster={monster}
+                    onJoinEncounter={onJoinEncounter}
+                />)}
             </Col >
         </Row >
     </>

@@ -1,36 +1,48 @@
 import moment from 'moment';
-import IPlayerProps from './models/IPlayerProps';
+import ICharacter from './ICharacter';
+import Monster from './IMonster';
+import IMonster from './IMonster';
+import Player from './IPlayer';
+import IPlayer from './IPlayer';
 
 export interface IEncounterData {
     round: number;
-    characters: IPlayerProps[];
+    players: IPlayer[];
+    enemies: IMonster[];
     isStarted: boolean;
     currentCharacter: number;
 }
 
 class Encounter {
     public _round: number;
-    private _characters: IPlayerProps[];
+    private _players: IPlayer[];
+    private _enemies: IMonster[];
     private _isStarted: boolean;
     private _currentCharacter: number;
-    constructor({ round = 0, characters = [], isStarted = false, currentCharacter = 0 }: IEncounterData) {
+    constructor({ round = 0, players = [], enemies = [], isStarted = false, currentCharacter = 0 }: IEncounterData) {
         this._round = round;
-        this._characters = characters;
+        this._players = players.map(player => new Player(player));
+        this._enemies = enemies.map(monster => new Monster(monster));
         this._isStarted = isStarted;
         this._currentCharacter = currentCharacter;
     }
     public get round() {
         return this._round;
     }
-    public get characters() {
-        return this._characters;
+    public get characters(): ICharacter[] {
+        const characters = this._players as ICharacter[];
+        return characters.concat(this._enemies);
     }
 
     public get aliveCharacters() {
-        return this._characters.filter(char => (char.health || 0) > 0).sort((a, b) =>  (b.iniciative || 0) - (a.iniciative || 0))
+        return this.characters
+            .filter(char => (char.hit_points || 0) > 0)
+            .sort((a, b) => (b.iniciative || 0) - (a.iniciative || 0))
     }
     public get deadCharacters() {
-        return this._characters.filter(char => (char.health || 0) <= 0).sort((a, b) => (b.iniciative || 0) - (a.iniciative || 0))
+        return this.characters
+            .filter(char => (char.hit_points || 0) <= 0)
+            .sort((a, b) => (b.iniciative || 0) - (a.iniciative || 0))
     }
     public get timePassed() {
         if (!this.isStarted) {
@@ -39,7 +51,7 @@ class Encounter {
         return moment.utc((this._round - 1) * 6 * 1000).format('HH:mm:ss');
     }
     public get currentCharacter() {
-        return this._characters[this._currentCharacter];
+        return this.characters[this._currentCharacter];
     }
 
     public get isStarted() {
@@ -47,7 +59,7 @@ class Encounter {
     }
 
     public get canBeStarted() {
-        return this._characters.length > 1;
+        return this.characters.length > 1;
     }
 
     private get nextCharacterIndex() {
@@ -60,7 +72,7 @@ class Encounter {
 
     private get previousCharacterIndex() {
         if (this._currentCharacter === 0) {
-            return this._characters.length - 1;
+            return this.characters.length - 1;
         } else {
             return this._currentCharacter - 1;
         }
@@ -80,26 +92,48 @@ class Encounter {
         this._isStarted = false;
     }
     private currentCharacterIsLastInRound() {
-        return this._currentCharacter === this._characters.length - 1;
+        return this._currentCharacter === this.characters.length - 1;
     }
     private currentCharactersFirstInRound() {
         return this._currentCharacter === 0;
     }
 
-    public addCharacter(add: IPlayerProps) {
-        this._characters.push(add);
-    }
-    public removeCharacter(remove: IPlayerProps) {
-        this._characters.splice(this._characters.indexOf(remove, 1));
-    }
-    public updateCharacter(update: IPlayerProps) {
-        this._characters = this._characters.map(player => {
-            if (player.name !== update.name) return player;
-            return update;
-        })
+    public addCharacter(add: ICharacter) {
+        if (add instanceof Player) {
+            this._players.push(add);
+        }
+        if (add instanceof Monster) {
+            this._enemies.push(add);
+        }
+
     }
 
-    public giveTurnToNextPlayer() {
+    public removeCharacter(remove: ICharacter) {
+        if (remove instanceof Player) {
+            this._players.splice(this._players.indexOf(remove, 1));
+        }
+        if (remove instanceof Monster) {
+            this._enemies.splice(this._enemies.indexOf(remove, 1));
+        }
+    }
+
+    public updateCharacter(update: ICharacter) {
+        if (update instanceof Player) {
+            this._players = this._players.map(player => {
+                if (player.name !== update.name) return player;
+                return update;
+            })
+        }
+        if (update instanceof Monster) {
+            this._enemies = this._enemies.map(enemy => {
+                if (enemy.name !== update.name) return enemy;
+                return update;
+            })
+        }
+        
+    }
+
+    public giveTurnToNextCharacter() {
         if (this.onlyOneCharacterIsAlive() || this.round === 0) {
             this.endEncounter();
             return;
@@ -109,13 +143,13 @@ class Encounter {
         }
         if (this.nextPlayerIsDead()) {
             this._currentCharacter = this.nextCharacterIndex;
-            this.giveTurnToNextPlayer();
+            this.giveTurnToNextCharacter();
         } else {
             this._currentCharacter = this.nextCharacterIndex;
         }
     }
 
-    public giveTurnToPreviousPlayer() {
+    public giveTurnToPreviousCharacter() {
         if (this.onlyOneCharacterIsAlive() || this.round === 0) {
             this.endEncounter();
             return;
@@ -126,7 +160,7 @@ class Encounter {
 
         if (this.previousPlayerIsDead()) {
             this._currentCharacter = this.previousCharacterIndex;
-            this.giveTurnToPreviousPlayer();
+            this.giveTurnToPreviousCharacter();
         } else {
             this._currentCharacter = this.previousCharacterIndex;
         }
@@ -136,20 +170,21 @@ class Encounter {
         return {
             round: this._round,
             currentCharacter: this._currentCharacter,
-            characters: this._characters,
+            players: this._players,
+            enemies: this._enemies,
             isStarted: this._isStarted
         }
     }
 
     private onlyOneCharacterIsAlive() {
-        return this._characters.filter(char => (char.health || 0) > 0).length <= 1;
+        return this.characters.filter(char => (char.hit_points || 0) > 0).length <= 1;
     }
 
     private nextPlayerIsDead() {
-        return (this._characters[this.nextCharacterIndex].health || 0) <= 0;
+        return (this.characters[this.nextCharacterIndex].hit_points || 0) <= 0;
     }
     private previousPlayerIsDead() {
-        return (this._characters[this.previousCharacterIndex].health || 0) <= 0;
+        return (this.characters[this.previousCharacterIndex].hit_points || 0) <= 0;
     }
 }
 

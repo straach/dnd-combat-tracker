@@ -2,19 +2,20 @@ import * as React from 'react';
 import PlayerInTeam  from './PlayerInTeam';
 import { Button, Modal, Form, Input, Radio, FormItemProps } from 'antd';
 import useLocalStorage from '../hooks/useLocalStorageHook';
-import IPlayerProps from '../models/IPlayerProps';
+import IPlayer from '../models/IPlayer';
+import Player from '../models/IPlayer';
 
 interface IPlayerList {
-    onJoinEncounter: (players: IPlayerProps) => void
+    onJoinEncounter: (players: IPlayer) => void
 }
 
 export default function PlayerList({ onJoinEncounter }: IPlayerList) {
-    const [players, setPlayers] = useLocalStorage<IPlayerProps[]>('players', [] as IPlayerProps[]);
-    const handleJoinEncounter = (player: IPlayerProps) => {
-        onJoinEncounter(player);
+    const [players, setPlayers] = useLocalStorage<IPlayer[]>('players', [] as IPlayer[]);
+    const handleJoinEncounter = (player: IPlayer) => {
+        onJoinEncounter(new Player(player));
     }
-    const handleUpdateCharacter = (char: IPlayerProps, replaceIndex: number) => {
-        setPlayers(players.map((player: IPlayerProps, index: number) => {
+    const handleUpdateCharacter = (char: IPlayer, replaceIndex: number) => {
+        setPlayers(players.map((player: IPlayer, index: number) => {
             if (replaceIndex !== index) return player;
             return char;
         }));

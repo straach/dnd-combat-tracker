@@ -3,15 +3,17 @@ import styled from 'styled-components';
 import './App.css';
 import { Layout, Row, Col, Button, Divider } from 'antd';
 import PlayerInTeam from './components/PlayerInTeam';
-import IPlayerProps from './models/IPlayerProps';
+import IPlayer from './models/IPlayer';
 import CharacterInEncounter from './components/CharacterInEncounter';
 import Sidebar from './components/Sidebar';
 import PlayerList from './components/PlayerList';
 import useLocalStorage from './hooks/useLocalStorageHook';
-import Encounter, { IEncounterData } from './Encounter';
+import Encounter, { IEncounterData } from './models/Encounter';
 import { MonsterList } from './components/MonsterList';
+import IMonster from './models/IMonster';
+import ICharacter from './models/ICharacter';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Footer } = Layout;
 const Main = styled.div`
   width: 80%;
   height: 100%;
@@ -25,22 +27,26 @@ function App() {
   const [encounterData, setEncounterData] = useLocalStorage<IEncounterData>('charactersInEncounter', {} as IEncounterData);
   const encounter = new Encounter(encounterData);
   const handleNextTurn = () => {
-    encounter.giveTurnToNextPlayer();
-    setEncounterData(encounter.toEncounterData());
+    encounter.giveTurnToNextCharacter();
+    // setEncounterData(encounter.toEncounterData());
   }
   const handlePrevTurn = () => {
-    encounter.giveTurnToPreviousPlayer();
-    setEncounterData(encounter.toEncounterData());
+    encounter.giveTurnToPreviousCharacter();
+    // setEncounterData(encounter.toEncounterData());
   }
-  const handleJoinEncounter = (char: IPlayerProps) => {
+  const handleJoinEncounter = (char: ICharacter) => {
     encounter.addCharacter(char);
-    setEncounterData(encounter.toEncounterData());
+    // setEncounterData(encounter.toEncounterData());
   }
-  const handleLeaveEncounter = (char: IPlayerProps) => {
+  const handleMultijoinEncounter = (chars: ICharacter[]) => {
+    chars.forEach(char => encounter.addCharacter(char));
+    //setEncounterData(encounter.toEncounterData());
+  }
+  const handleLeaveEncounter = (char: ICharacter) => {
     encounter.removeCharacter(char);
-    setEncounterData(encounter.toEncounterData());
+    //setEncounterData(encounter.toEncounterData());
   }
-  const handleUpdatePlayerInEncounter = (char: IPlayerProps) => {
+  const handleUpdatePlayerInEncounter = (char: ICharacter) => {
     encounter.updateCharacter(char);
     setEncounterData(encounter.toEncounterData());
   }
@@ -54,6 +60,7 @@ function App() {
   }
   const handleClearEncounter = () => {
     setEncounterData({} as IEncounterData);
+    //setEncounterData(encounter.toEncounterData());
   }
   const deadCharacters = encounter.deadCharacters;
   return (<Layout style={{ minHeight: '100%' }}>
@@ -78,7 +85,7 @@ function App() {
     <Content>
       <Main>
         <Divider plain>Active</Divider>
-        {encounter.aliveCharacters.map((char: IPlayerProps, index: number) =>
+        {encounter.aliveCharacters.map((char: ICharacter, index: number) =>
           <CharacterInEncounter
             isActive={encounter.isStarted}
             key={`${char.name}+${index}`}
@@ -91,7 +98,7 @@ function App() {
           />)}
         {deadCharacters.length > 0 &&
           <><Divider plain>Dead</Divider>
-            {deadCharacters.map((char: IPlayerProps, index: number) => <CharacterInEncounter
+            {deadCharacters.map((char: ICharacter, index: number) => <CharacterInEncounter
               isActive={encounter.isStarted}
               key={`${char.name}+${index}`}
               value={char}
@@ -106,7 +113,7 @@ function App() {
       </Main>
     </Content>
     <Sidebar align="right" >
-      <MonsterList/>
+      <MonsterList onJoinEncounter={handleMultijoinEncounter} />
     </Sidebar>
     <Footer style={{ textAlign: 'center' }}></Footer>
   </Layout >);

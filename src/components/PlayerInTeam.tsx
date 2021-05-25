@@ -1,17 +1,14 @@
 import { Input, InputNumber, Row, Col, Switch, Button } from 'antd';
 import React, { useState, FunctionComponent } from 'react';
-import IPlayerProps from '../models/IPlayerProps';
+import IPlayer from '../models/IPlayer';
 import { BsBoxArrowRight } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
-const ALL_PLAYER_CHARACTERS = 'ALL_PLAYER_CHARACTERS';
-
-
 
 interface IPlayerInputProps {
-    value: IPlayerProps;
-    onChange: (value: IPlayerProps) => void;
+    value: IPlayer;
+    onChange: (value: IPlayer) => void;
     onRemove: () => void;
-    onJoinEncounter: (player: IPlayerProps) => void;
+    onJoinEncounter: (player: IPlayer) => void;
 }
 
 const PlayerInTeam: FunctionComponent<IPlayerInputProps> = ({ value, onChange, onJoinEncounter, onRemove }) => {
@@ -20,10 +17,10 @@ const PlayerInTeam: FunctionComponent<IPlayerInputProps> = ({ value, onChange, o
             Name: <Input value={value.name} onChange={(event) => onChange({ ...value, name: event.target.value })} />
         </Col>
         <Col>
-            Health: <InputNumber value={value.health} onChange={(number) => onChange({ ...value, health: number })} />
+            Health: <InputNumber value={value.hit_points} onChange={(number) => onChange({ ...value, hit_points: number })} />
         </Col>
         <Col>
-            Armor Class: <InputNumber value={value.armorClass} onChange={(number) => onChange({ ...value, armorClass: number })} />
+            Armor Class: <InputNumber value={value.armor_class} onChange={(number) => onChange({ ...value, armor_class: number })} />
         </Col>
         <Col>
             Speed: <InputNumber value={value.speed} onChange={(number) => onChange({ ...value, speed: number })} />
