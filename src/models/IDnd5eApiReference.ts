@@ -5,3 +5,8 @@ interface IDnd5eApiReference {
 }
 
 export default IDnd5eApiReference;
+
+export interface IIndexResult<T> {
+    count: number;
+    results: T;
+}

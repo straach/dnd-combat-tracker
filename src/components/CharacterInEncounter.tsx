@@ -1,12 +1,14 @@
 import { Button, Input, Popover } from 'antd';
 import React, { FunctionComponent, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { BsArrowsCollapse } from "react-icons/bs";
+import { BsArrowsCollapse, BsPersonFill } from "react-icons/bs";
 import { GiDeathSkull } from "react-icons/gi";
 import { IoMdListBox } from "react-icons/io";
+import { GiEvilMinion } from "react-icons/gi";
 import styled from 'styled-components';
 import { IActionableCharacter } from '../models/ActionableCharacter';
 import Monster from '../models/Monster';
+import Player from '../models/Player';
 import Box from './CharacterBox';
 import Conditions from './Condition';
 import StatItem from './StatItem';
@@ -47,7 +49,15 @@ const HealthStatus = ({ hit_points, max_hit_points }: IHealthStatusProps) => {
         }}>
     </HealthBar >;
 }
-
+interface TypeLogoProps {
+    value: IActionableCharacter;
+}
+const TypeLogo = ({ value }: TypeLogoProps) => {
+    if (value instanceof Player) {
+        return <BsPersonFill size={40} />
+    }
+    return <GiEvilMinion size={40} />
+}
 interface IEncounterCharacter {
     value: IActionableCharacter;
     isActive: boolean;
@@ -57,7 +67,7 @@ interface IEncounterCharacter {
     onChange: (char: IActionableCharacter) => void;
     onRemove: () => void;
 }
-const CharacterInEncounter: FunctionComponent<IEncounterCharacter> = ({ value, hasTurn, isActive, onPrev, onNext, onRemove, onChange }) => {
+const CharacterInEncounter = ({ value, hasTurn, isActive, onPrev, onNext, onRemove, onChange }: IEncounterCharacter) => {
     const handleHitPointsChange = (hitPoints: number) => {
         value.changeHitPoints(hitPoints);
         onChange(value);
@@ -71,24 +81,29 @@ const CharacterInEncounter: FunctionComponent<IEncounterCharacter> = ({ value, h
         value.changeComment(event.target.value);
         onChange(value);
     }
+    const handleConditionChange = (conditions: any[]) => {
+        value.changeConditions(conditions);
+        onChange(value);
+    }
     const isMonster = value instanceof Monster;
     const [showComments, setShowComments] = useState(false);
     return (<><Box style={{ transform: hasTurn ? 'scale(1.05, 1.05)' : 'none', opacity: ((value.hit_points || 0) <= 0 ? 0.3 : 1) }}>
         <HealthStatus hit_points={value.hit_points || 0} max_hit_points={value.max_hit_points}></HealthStatus>
-        <CharacterName >{value.name} ({value.iniciative})</CharacterName>
+        <CharacterName >
+            <TypeLogo value={value} />{value.name} ({value.iniciative})</CharacterName>
         <CharacterName >
             <StatItem title="AC" value={value.armor_class || 0} isHidden={false} onChange={handleArmorClassChange} />
             <StatItem title="Health" value={value.hit_points || 0} isHidden={false} onChange={handleHitPointsChange} />
         </CharacterName>
         <CharacterName >
-            <Conditions availableConditions={['a', 'b', 'c', 'd']} />
+            <Conditions conditions={value.conditions} onChange={handleConditionChange} />
         </CharacterName>
         <CharacterName >
             <GiDeathSkull onClick={() => handleHitPointsChange(0)} /> InstaKill
             {isMonster && <Popover
                 content={<StatsBlockWide monster={value as Monster} />}>
-                <IoMdListBox size={40} /> 
-             </Popover>}
+                <IoMdListBox size={40} />
+            </Popover>}
             <BsArrowsCollapse onClick={() => setShowComments(!showComments)} />
         </CharacterName>
         {hasTurn && isActive && <CharacterName>

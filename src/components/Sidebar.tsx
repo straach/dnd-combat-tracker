@@ -29,7 +29,7 @@ const Sidebar: FunctionComponent<any> = ({ align, children }) => {
         align={align}
         reverseArrow={align === 'right'}>
         {!collapsed && <Row style={{ height: '100%', backgroundColor: 'white' }}>
-            <Col style={{ height: '100%', width: '100%' }}>{children}</Col>
+            <Col style={{ height: '100%', width: '100%', overflow: 'auto' }}>{children}</Col>
         </Row>}
     </SideBarContainer>);
 };

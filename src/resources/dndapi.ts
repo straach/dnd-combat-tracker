@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { setupCache } from 'axios-cache-adapter';
 import IBaseMonster from '../models/IBaseMonster';
+import ICondition from '../models/ICondition';
+import IDnd5eApiReference, { IIndexResult } from '../models/IDnd5eApiReference';
 import IMonster from '../models/Monster';
 interface IGraphQLResult<T> {
     data: T;
@@ -10,7 +12,8 @@ interface IMonsterResult {
 }
 const monstersGraphQLRequest = {
     query:
-        '{ monsters(limit: 500) { index, name, alignment, size, hit_points, armor_class, type }}' };
+        '{ monsters(limit: 500) { index, name, alignment, size, hit_points, armor_class, type }}'
+};
 
 const API_BASE_URL = `https://www.dnd5eapi.co/`
 const cache = setupCache({
@@ -31,5 +34,16 @@ export const getAllMonsters = async () => {
 
 export const getMonster = async (monster: string) => {
     const result = await instance.get<IMonster>(`/api/monsters/${monster}`);
+    return result.data;
+}
+
+
+export const getConditions = async () => {
+    const result = await instance.get<IIndexResult<IDnd5eApiReference[]>>(`/api/conditions`);
+    return result.data.results;
+}
+
+export const getCondition = async (name: string) => {
+    const result = await instance.get<ICondition>(`/api/conditions/${name}`);
     return result.data;
 }

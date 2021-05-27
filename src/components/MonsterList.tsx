@@ -42,11 +42,6 @@ export function MonsterList({ onJoinEncounter }: IMonsterListProps) {
     }
 
     return (<>
-        <Row>
-            <Col >
-                <Input value={filter} onChange={event => setFilter(event.target.value)} />
-            </Col>
-        </Row>
         <Row justify="center" style={{ backgroundColor: 'white' }}>
             <Col span={22}>
                 <List
@@ -68,7 +63,7 @@ export function MonsterList({ onJoinEncounter }: IMonsterListProps) {
         <Row justify="center" style={{ height: '100%', overflow: 'auto' }}>
             <Col span={22}>
                 <List
-                    header={<div>Search Results</div>}
+                    header={<><Input value={filter} placeholder="Type to search" onChange={event => setFilter(event.target.value)} /></>}
                     bordered
                     dataSource={(filter.length > 2 ? allMonstersOverview : [])
                         .filter(monster => monster.name.toLowerCase().indexOf(filter.toLowerCase()) > -1)}

@@ -1,7 +1,8 @@
 import { Button } from 'antd';
-import * as React from 'react';
+import React, { useState } from 'react';
 import { uuid } from 'uuidv4';
 import useLocalStorage from '../hooks/useLocalStorageHook';
+import ICharacter from '../models/ICharacter';
 import Player, { IPlayer } from '../models/Player';
 import PlayerInTeam from './PlayerInTeam';
 
@@ -32,7 +33,7 @@ export default function PlayerList({ onJoinEncounter }: IPlayerList) {
     }
     return (<>{
         players.map((player, index) => <PlayerInTeam
-            key={`${player.name}+${index}`}
+            key={`${index}${players.length}`}
             value={player}
             onChange={c => handleUpdateCharacter(c, index)}
             onRemove={() => handleRemovePlayer(index)}
