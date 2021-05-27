@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import IMonster from '../../models/IMonster';
+import IMonster from '../../models/Monster';
 import StyledStatsContainer from './StatsBlockWideStyled';
 import { StatsSectionLeft } from './StatsSectionLeft';
 import { StatsSectionRight } from './StatsSectionRight';
