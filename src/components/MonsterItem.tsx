@@ -3,18 +3,18 @@ import React, { useState } from 'react';
 import { BsBoxArrowLeft } from 'react-icons/bs';
 import { IoMdListBox } from "react-icons/io";
 import IBaseMonster from '../models/IBaseMonster';
-import IMonster from '../models/IMonster';
+import IMonster from '../models/Monster';
 import { getMonster } from '../resources/dndapi';
 import CharacterBox from './CharacterBox';
 import StatsBlockWide from './stats-block/StatsBlockWide';
 import { cloneDeep } from 'lodash';
-import Player from '../models/IPlayer';
-import Monster from '../models/IMonster';
+import Player from '../models/Player';
+import Monster from '../models/Monster';
 
 
 interface IMonsterItemProps {
     monster: IBaseMonster;
-    onJoinEncounter: (monsters: IMonster[]) => void;
+    onJoinEncounter: (monsters: Monster[]) => void;
 }
 const MonsterItem = ({ monster, onJoinEncounter }: IMonsterItemProps) => {
     const [show, setShow] = useState<boolean>(false);
@@ -41,7 +41,9 @@ const MonsterItem = ({ monster, onJoinEncounter }: IMonsterItemProps) => {
     const handleMonsterJoin = (monster: IMonster) => {
         const stats: IMonster[] = [];
         for (let i = 0; i <= amount - 1; i++) {
-            stats.push(new Monster(cloneDeep<IMonster>(monster)));
+            const monsterData = cloneDeep<IMonster>(monster);
+            monsterData.iniciative = iniciative;
+            stats.push(new Monster(monsterData));
         }
         onJoinEncounter(stats);
         setAmount(1);

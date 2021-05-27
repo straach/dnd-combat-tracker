@@ -1,5 +1,7 @@
+import ActionableCharacter, { IActionableCharacter } from "./ActionableCharacter";
 import IBaseMonster from "./IBaseMonster";
 import IDnd5eApiReference from "./IDnd5eApiReference";
+import IUnique from "./IUnique";
 import KeyedObject from "./KeyedObject";
 
 interface ISpeed {
@@ -29,7 +31,7 @@ interface IForm {
     url: string;
 }
 
-export interface IMonster extends IBaseMonster {
+export interface IMonster extends IBaseMonster, IActionableCharacter, IUnique {
     subtype: string;
     hit_dice: number;
     forms: IForm[];
@@ -53,7 +55,7 @@ export interface IMonster extends IBaseMonster {
     url: string;
 }
 
-class Monster implements IMonster {
+class Monster extends ActionableCharacter implements IMonster {
     subtype: string;
     hit_dice: number;
     forms: IForm[];
@@ -76,15 +78,14 @@ class Monster implements IMonster {
     legendary_actions: INameDescItem[];
     url: string;
     index: string;
-    name: string;
     alignment: string;
     challenge_rating: number;
     size: string;
-    hit_points: number;
-    armor_class: number;
     type: string;
-    iniciative?: number | undefined;
+    comment?: string | undefined;
+
     constructor(monster: IMonster) {
+        super(monster.uuid, monster.name, monster.hit_points, monster.max_hit_points, monster.iniciative, monster.armor_class, monster.comment, monster.conditions);
         this.subtype = monster.subtype;
         this.hit_dice = monster.hit_dice;
         this.forms = monster.forms;
@@ -107,14 +108,10 @@ class Monster implements IMonster {
         this.legendary_actions = monster.legendary_actions;
         this.url = monster.url;
         this.index = monster.index;
-        this.name = monster.name;
         this.alignment = monster.alignment;
         this.challenge_rating = monster.challenge_rating;
         this.size = monster.size;
-        this.hit_points = monster.hit_points;
-        this.armor_class = monster.armor_class;
         this.type = monster.type;
-        this.iniciative = monster.iniciative;
     }
 
 }

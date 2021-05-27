@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import { Button, Col, Divider, Layout, Row } from 'antd';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import './App.css';
-import { Layout, Row, Col, Button, Divider } from 'antd';
-import PlayerInTeam from './components/PlayerInTeam';
-import IPlayer from './models/IPlayer';
 import CharacterInEncounter from './components/CharacterInEncounter';
-import Sidebar from './components/Sidebar';
-import PlayerList from './components/PlayerList';
-import useLocalStorage from './hooks/useLocalStorageHook';
-import Encounter, { IEncounterData } from './models/Encounter';
 import { MonsterList } from './components/MonsterList';
-import IMonster from './models/IMonster';
-import ICharacter from './models/ICharacter';
+import PlayerList from './components/PlayerList';
+import Sidebar from './components/Sidebar';
+import useLocalStorage from './hooks/useLocalStorageHook';
+import { IActionableCharacter } from './models/ActionableCharacter';
+import Encounter, { IEncounterData } from './models/Encounter';
+import { getAllMonsters } from './resources/dndapi';
 
 const { Header, Content, Footer } = Layout;
 const Main = styled.div`
@@ -23,30 +21,31 @@ const Main = styled.div`
   min-width: 800px;
 `;
 
+const cacheMonsters = () => getAllMonsters();
 function App() {
   const [encounterData, setEncounterData] = useLocalStorage<IEncounterData>('charactersInEncounter', {} as IEncounterData);
   const encounter = new Encounter(encounterData);
   const handleNextTurn = () => {
     encounter.giveTurnToNextCharacter();
-    // setEncounterData(encounter.toEncounterData());
+    setEncounterData(encounter.toEncounterData());
   }
   const handlePrevTurn = () => {
     encounter.giveTurnToPreviousCharacter();
-    // setEncounterData(encounter.toEncounterData());
+    setEncounterData(encounter.toEncounterData());
   }
-  const handleJoinEncounter = (char: ICharacter) => {
+  const handleJoinEncounter = (char: IActionableCharacter) => {
     encounter.addCharacter(char);
-    // setEncounterData(encounter.toEncounterData());
+    setEncounterData(encounter.toEncounterData());
   }
-  const handleMultijoinEncounter = (chars: ICharacter[]) => {
+  const handleMultijoinEncounter = (chars: IActionableCharacter[]) => {
     chars.forEach(char => encounter.addCharacter(char));
-    //setEncounterData(encounter.toEncounterData());
+    setEncounterData(encounter.toEncounterData());
   }
-  const handleLeaveEncounter = (char: ICharacter) => {
+  const handleLeaveEncounter = (char: IActionableCharacter) => {
     encounter.removeCharacter(char);
-    //setEncounterData(encounter.toEncounterData());
+    setEncounterData(encounter.toEncounterData());
   }
-  const handleUpdatePlayerInEncounter = (char: ICharacter) => {
+  const handleUpdatePlayerInEncounter = (char: IActionableCharacter) => {
     encounter.updateCharacter(char);
     setEncounterData(encounter.toEncounterData());
   }
@@ -60,7 +59,7 @@ function App() {
   }
   const handleClearEncounter = () => {
     setEncounterData({} as IEncounterData);
-    //setEncounterData(encounter.toEncounterData());
+    setEncounterData(encounter.toEncounterData());
   }
   const deadCharacters = encounter.deadCharacters;
   return (<Layout style={{ minHeight: '100%' }}>
@@ -71,7 +70,7 @@ function App() {
       </Col>
         <Col>
           Round: {encounter.round} Time: {encounter.timePassed}
-          <Button onClick={handleToggleStartEncounter}>Start/End</Button>
+          <Button onClick={handleToggleStartEncounter}>{encounter.isStarted ? 'End' : 'Start'}</Button>
           <Button onClick={handleClearEncounter}>Clear</Button>
         </Col>
       </Row>
@@ -85,7 +84,7 @@ function App() {
     <Content>
       <Main>
         <Divider plain>Active</Divider>
-        {encounter.aliveCharacters.map((char: ICharacter, index: number) =>
+        {encounter.aliveCharacters.map((char: IActionableCharacter, index: number) =>
           <CharacterInEncounter
             isActive={encounter.isStarted}
             key={`${char.name}+${index}`}
@@ -98,7 +97,7 @@ function App() {
           />)}
         {deadCharacters.length > 0 &&
           <><Divider plain>Dead</Divider>
-            {deadCharacters.map((char: ICharacter, index: number) => <CharacterInEncounter
+            {deadCharacters.map((char: IActionableCharacter, index: number) => <CharacterInEncounter
               isActive={encounter.isStarted}
               key={`${char.name}+${index}`}
               value={char}

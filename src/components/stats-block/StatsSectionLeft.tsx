@@ -1,5 +1,5 @@
 import * as React from 'react';
-import IMonster from '../../models/IMonster';
+import IMonster from '../../models/Monster';
 import { GenericApiReferences } from '../GenericApiReference';
 import AbilityStats from './AbilityStats';
 import KeyedList from './KeyedList';

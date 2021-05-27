@@ -1,5 +1,5 @@
 import * as React from 'react';
-import IMonster from '../../models/IMonster';
+import IMonster from '../../models/Monster';
 import AbilityScore from './AbilityScore';
 
 interface IAbilityStatsProps {

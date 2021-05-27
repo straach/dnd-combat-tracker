@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { setupCache } from 'axios-cache-adapter';
 import IBaseMonster from '../models/IBaseMonster';
-import IMonster from '../models/IMonster';
+import IMonster from '../models/Monster';
 interface IGraphQLResult<T> {
     data: T;
 }

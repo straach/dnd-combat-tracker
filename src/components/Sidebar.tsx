@@ -16,19 +16,21 @@ const SideBarContainer = styled(Sider) <{ align: string }>`
 `;
 
 
-const Sidebar: FunctionComponent<any> = ({ align, show, onClose, children }) => {
-    const [isCollapsed, setIsCollapsed] = useState(false);
+const Sidebar: FunctionComponent<any> = ({ align, children }) => {
+    const [collapsed, setCollapsed] = useState(true);
     return (<SideBarContainer
         width={'80%'}
         collapsible
+        collapsed={collapsed}
+        onCollapse={setCollapsed}
         defaultCollapsed={true}
         collapsedWidth={0}
         zeroWidthTriggerStyle={{}}
         align={align}
         reverseArrow={align === 'right'}>
-        <Row style={{ height: '100%' }}>
+        {!collapsed && <Row style={{ height: '100%', backgroundColor: 'white' }}>
             <Col style={{ height: '100%', width: '100%' }}>{children}</Col>
-        </Row>
+        </Row>}
     </SideBarContainer>);
 };
 

@@ -1,8 +1,9 @@
 import { Input, InputNumber, Row, Col, Switch, Button } from 'antd';
 import React, { useState, FunctionComponent } from 'react';
-import IPlayer from '../models/IPlayer';
+import { IPlayer } from '../models/Player';
 import { BsBoxArrowRight } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
+import ICharacter from '../models/ICharacter';
 
 interface IPlayerInputProps {
     value: IPlayer;
@@ -21,9 +22,6 @@ const PlayerInTeam: FunctionComponent<IPlayerInputProps> = ({ value, onChange, o
         </Col>
         <Col>
             Armor Class: <InputNumber value={value.armor_class} onChange={(number) => onChange({ ...value, armor_class: number })} />
-        </Col>
-        <Col>
-            Speed: <InputNumber value={value.speed} onChange={(number) => onChange({ ...value, speed: number })} />
         </Col>
         <Col>
             Passive Perception: <InputNumber value={value.passivePerception} onChange={(number) => onChange({ ...value, passivePerception: number })} />

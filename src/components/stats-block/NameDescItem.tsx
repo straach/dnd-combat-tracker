@@ -1,4 +1,4 @@
-import { INameDescItem } from "../../models/IMonster";
+import { INameDescItem } from "../../models/Monster";
 
 interface INameDescItemProps {
     value: INameDescItem;

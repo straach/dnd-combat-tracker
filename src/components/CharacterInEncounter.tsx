@@ -1,17 +1,16 @@
-import React, { useState, FunctionComponent } from 'react';
-import styled, { StyledComponent } from 'styled-components';
-import Conditions from './Condition';
-import StatItem from './StatItem';
+import { Button, Input, Popover } from 'antd';
+import React, { FunctionComponent, useState } from 'react';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { BsArrowsCollapse } from "react-icons/bs";
 import { GiDeathSkull } from "react-icons/gi";
 import { IoMdListBox } from "react-icons/io";
-import { BsArrowsExpand, BsArrowsCollapse } from "react-icons/bs";
-import { Button, Row, Col, Input } from 'antd';
-import IPlayer from '../models/IPlayer';
-import { AiOutlineDelete } from 'react-icons/ai';
+import styled from 'styled-components';
+import { IActionableCharacter } from '../models/ActionableCharacter';
+import Monster from '../models/Monster';
 import Box from './CharacterBox';
-import ICharacter from '../models/ICharacter';
-
-
+import Conditions from './Condition';
+import StatItem from './StatItem';
+import StatsBlockWide from './stats-block/StatsBlockWide';
 
 const CharacterName = styled.div`
     font-family: 'Libre Baskerville', 'Lora', 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;
@@ -32,38 +31,64 @@ const HealthBar = styled.div`
     align-self: auto;
     height: 100%;
 `;
-const HealthStatus = ({ health }: { health: number }) => {
+interface IHealthStatusProps {
+    hit_points: number;
+    max_hit_points: number;
+}
+const HealthStatus = ({ hit_points, max_hit_points }: IHealthStatusProps) => {
+    const percentageOf = (percentage: number, ofMaximum: number) => {
+        return ofMaximum / 100 * percentage;
+    }
     return <HealthBar
         style={{
-            backgroundColor: health <= 10 ? '#BB2020' : (health <= 50 ? 'yellow' : 'green')
+            backgroundColor: (hit_points <= percentageOf(10, max_hit_points) ? '#BB2020' :
+                (hit_points <= percentageOf(50, max_hit_points) ? 'yellow'
+                    : 'green'))
         }}>
     </HealthBar >;
 }
 
 interface IEncounterCharacter {
-    value: ICharacter;
+    value: IActionableCharacter;
     isActive: boolean;
     hasTurn: boolean;
     onPrev: () => void;
     onNext: () => void;
-    onChange: (character: ICharacter) => void;
+    onChange: (char: IActionableCharacter) => void;
     onRemove: () => void;
 }
-const CharacterInEncounter: FunctionComponent<IEncounterCharacter> = ({ value, hasTurn, isActive, onChange, onPrev, onNext, onRemove }) => {
+const CharacterInEncounter: FunctionComponent<IEncounterCharacter> = ({ value, hasTurn, isActive, onPrev, onNext, onRemove, onChange }) => {
+    const handleHitPointsChange = (hitPoints: number) => {
+        value.changeHitPoints(hitPoints);
+        onChange(value);
+    }
+    const handleArmorClassChange = (hitPoints: number) => {
+        // value.change(hitPoints);
+        // onChange();
+        //armorClass => onChange({ ...value, armor_class: armorClass })
+    }
+    const handleCommentChange = (event: any) => {
+        value.changeComment(event.target.value);
+        onChange(value);
+    }
+    const isMonster = value instanceof Monster;
     const [showComments, setShowComments] = useState(false);
     return (<><Box style={{ transform: hasTurn ? 'scale(1.05, 1.05)' : 'none', opacity: ((value.hit_points || 0) <= 0 ? 0.3 : 1) }}>
-        <HealthStatus health={value.hit_points || 0}></HealthStatus>
+        <HealthStatus hit_points={value.hit_points || 0} max_hit_points={value.max_hit_points}></HealthStatus>
         <CharacterName >{value.name} ({value.iniciative})</CharacterName>
         <CharacterName >
-            <StatItem title="AC" value={value.armor_class || 0} isHidden={false} onChange={armorClass => onChange({ ...value, armor_class: armorClass })} />
-            <StatItem title="Health" value={value.hit_points || 0} isHidden={false} onChange={health => onChange({ ...value, hit_points: health })} />
+            <StatItem title="AC" value={value.armor_class || 0} isHidden={false} onChange={handleArmorClassChange} />
+            <StatItem title="Health" value={value.hit_points || 0} isHidden={false} onChange={handleHitPointsChange} />
         </CharacterName>
         <CharacterName >
             <Conditions availableConditions={['a', 'b', 'c', 'd']} />
         </CharacterName>
         <CharacterName >
-            <GiDeathSkull onClick={() => onChange({ ...value, hit_points: 0 })} /> InstaKill
-            <IoMdListBox /> Stats
+            <GiDeathSkull onClick={() => handleHitPointsChange(0)} /> InstaKill
+            {isMonster && <Popover
+                content={<StatsBlockWide monster={value as Monster} />}>
+                <IoMdListBox size={40} /> 
+             </Popover>}
             <BsArrowsCollapse onClick={() => setShowComments(!showComments)} />
         </CharacterName>
         {hasTurn && isActive && <CharacterName>
@@ -74,7 +99,7 @@ const CharacterInEncounter: FunctionComponent<IEncounterCharacter> = ({ value, h
             <Button onClick={onRemove} ><AiOutlineDelete size={30} /></Button>
         </CharacterName>}
     </Box>
-        {showComments && <Box>Comment: <Input.TextArea value={value.comment} onChange={event => onChange({ ...value, comment: event.target.value })} /></Box>}
+        {showComments && <Box>Comment: <Input.TextArea value={value.comment} onChange={handleCommentChange} /></Box>}
     </>
     );
 }

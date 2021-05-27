@@ -1,12 +1,12 @@
+import { Button } from 'antd';
 import * as React from 'react';
-import PlayerInTeam  from './PlayerInTeam';
-import { Button, Modal, Form, Input, Radio, FormItemProps } from 'antd';
+import { uuid } from 'uuidv4';
 import useLocalStorage from '../hooks/useLocalStorageHook';
-import IPlayer from '../models/IPlayer';
-import Player from '../models/IPlayer';
+import Player, { IPlayer } from '../models/Player';
+import PlayerInTeam from './PlayerInTeam';
 
 interface IPlayerList {
-    onJoinEncounter: (players: IPlayer) => void
+    onJoinEncounter: (players: Player) => void
 }
 
 export default function PlayerList({ onJoinEncounter }: IPlayerList) {
@@ -27,7 +27,7 @@ export default function PlayerList({ onJoinEncounter }: IPlayerList) {
     }
     const handleAddNewPlayer = () => {
         const newPlayerList = [...players];
-        newPlayerList.push({});
+        newPlayerList.push({ uuid: uuid(), name: 'A', hit_points: 1, iniciative: 0, conditions: [] });
         setPlayers(newPlayerList);
     }
     return (<>{

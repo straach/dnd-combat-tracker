@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { INameDescItem } from '../../models/IMonster';
+import { INameDescItem } from '../../models/Monster';
 import NameDescItem from './NameDescItem';
 
 export interface IActionsProps {
