@@ -1,10 +1,9 @@
-import { Button, Input, Popover } from 'antd';
-import React, { FunctionComponent, useState } from 'react';
+import { Button, Input, Popover, Space } from 'antd';
+import React, { useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsArrowsCollapse, BsPersonFill } from "react-icons/bs";
-import { GiDeathSkull } from "react-icons/gi";
+import { GiDeathSkull, GiEvilMinion } from "react-icons/gi";
 import { IoMdListBox } from "react-icons/io";
-import { GiEvilMinion } from "react-icons/gi";
 import styled from 'styled-components';
 import { IActionableCharacter } from '../models/ActionableCharacter';
 import Monster from '../models/Monster';
@@ -92,26 +91,28 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onPrev, onNext, onRemo
         <CharacterName >
             <TypeLogo value={value} />{value.name} ({value.iniciative})</CharacterName>
         <CharacterName >
-            <StatItem title="AC" value={value.armor_class || 0} isHidden={false} onChange={handleArmorClassChange} />
-            <StatItem title="Health" value={value.hit_points || 0} isHidden={false} onChange={handleHitPointsChange} />
+            <StatItem title="AC" value={value.armor_class || 0} onChange={handleArmorClassChange} />
+            <StatItem title="Health" value={value.hit_points || 0} onChange={handleHitPointsChange} />
         </CharacterName>
         <CharacterName >
             <Conditions conditions={value.conditions} onChange={handleConditionChange} />
         </CharacterName>
         <CharacterName >
-            <GiDeathSkull onClick={() => handleHitPointsChange(0)} /> InstaKill
+            <Space>
+                <GiDeathSkull size={30} onClick={() => handleHitPointsChange(0)} title="InstaKill"/> 
             {isMonster && <Popover
                 content={<StatsBlockWide monster={value as Monster} />}>
-                <IoMdListBox size={40} />
+                <IoMdListBox title="stats" size={35} />
             </Popover>}
-            <BsArrowsCollapse onClick={() => setShowComments(!showComments)} />
+            <BsArrowsCollapse size={30} title="Show comment" onClick={() => setShowComments(!showComments)} />
+            </Space>
         </CharacterName>
         {hasTurn && isActive && <CharacterName>
             <Button onClick={() => onPrev()}>prev</Button>
             <Button onClick={() => onNext()} type="primary">next</Button>
         </CharacterName>}
         {!isActive && <CharacterName >
-            <Button onClick={onRemove} ><AiOutlineDelete size={30} /></Button>
+            <Button onClick={onRemove} ><AiOutlineDelete title="Delete" size={30} /></Button>
         </CharacterName>}
     </Box>
         {showComments && <Box>Comment: <Input.TextArea value={value.comment} onChange={handleCommentChange} /></Box>}

@@ -1,8 +1,7 @@
 import { Button } from 'antd';
-import React, { useState } from 'react';
+import React from 'react';
 import { uuid } from 'uuidv4';
 import useLocalStorage from '../hooks/useLocalStorageHook';
-import ICharacter from '../models/ICharacter';
 import Player, { IPlayer } from '../models/Player';
 import PlayerInTeam from './PlayerInTeam';
 
