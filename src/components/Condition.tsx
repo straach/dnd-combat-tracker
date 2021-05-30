@@ -46,7 +46,7 @@ const Conditions = ({ conditions = [], onChange }: IConditionProps) => {
         showArrow
         allowClear
         // tagRender={tagRender}
-        style={{ width: '100%' }}
+        style={{ width: '180px' }}
         placeholder="Select Condition"
         value={conditions || []}
         onChange={onChange}

@@ -75,6 +75,10 @@ function Game() {
             <Checkbox checked={isObscured} onChange={toggleIsObscured} /> Obscure Data
             <Button onClick={handleToggleStartEncounter}>{encounter.isStarted ? 'End' : 'Start'}</Button>
             <Button onClick={handleClearEncounter}>Clear</Button>
+        <>
+                <Button onClick={() => handlePrevTurn()}>prev</Button>
+                <Button onClick={() => handleNextTurn()} type="primary">next</Button>
+                </>
           </Space>
         </Col>
       </Row>
@@ -95,8 +99,6 @@ function Game() {
             value={char}
             hasTurn={char === encounter.currentCharacter && encounter.isStarted}
             onChange={handleUpdatePlayerInEncounter}
-            onNext={handleNextTurn}
-            onPrev={handlePrevTurn}
             onRemove={() => handleLeaveEncounter(char)}
           />)}
         {deadCharacters.length > 0 &&
@@ -107,8 +109,6 @@ function Game() {
               value={char}
               hasTurn={false}
               onChange={handleUpdatePlayerInEncounter}
-              onNext={() => { }}
-              onPrev={() => { }}
               onRemove={() => { }}
             />)}
           </>
