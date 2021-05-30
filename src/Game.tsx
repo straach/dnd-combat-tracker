@@ -63,7 +63,7 @@ function Game() {
     setEncounterData({} as IEncounterData);
   }
   const deadCharacters = encounter.deadCharacters;
-  return (<Layout style={{ minHeight: '100%' }}>
+  return (<Layout style={{ minHeight: '100%', height: '100%' }}>
     <Header className="header" style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
       <Row justify="space-between">
         <Col span={5}>
@@ -115,10 +115,10 @@ function Game() {
         }
       </Main>
     </Content>
-    <Sidebar align="right" >
+    <Sidebar isMonster={true} align="right" >
       <MonsterList onJoinEncounter={handleMultijoinEncounter} />
     </Sidebar>
-    <Footer style={{ textAlign: 'center' }}></Footer>
+    <Footer style={{ textAlign: 'center' }}>-</Footer>
   </Layout >);
 }
 

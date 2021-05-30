@@ -1,7 +1,7 @@
 import { Button, Input, Popover, Space } from 'antd';
 import React, { useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { BsArrowsCollapse, BsPersonFill } from "react-icons/bs";
+import { BsArrowsCollapse, BsPersonFill, BsArrowsExpand } from "react-icons/bs";
 import { GiDeathSkull, GiEvilMinion } from "react-icons/gi";
 import { IoMdListBox } from "react-icons/io";
 import styled from 'styled-components';
@@ -99,12 +99,13 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onPrev, onNext, onRemo
         </CharacterName>
         <CharacterName >
             <Space>
-                <GiDeathSkull size={30} onClick={() => handleHitPointsChange(0)} title="InstaKill"/> 
-            {isMonster && <Popover
-                content={<StatsBlockWide monster={value as Monster} />}>
-                <IoMdListBox title="stats" size={35} />
-            </Popover>}
-            <BsArrowsCollapse size={30} title="Show comment" onClick={() => setShowComments(!showComments)} />
+                <GiDeathSkull size={30} onClick={() => handleHitPointsChange(0)} title="InstaKill" />
+                {isMonster && <Popover
+                    content={<StatsBlockWide monster={value as Monster} />}>
+                    <IoMdListBox title="stats" size={35} />
+                </Popover>}
+                {showComments ? <BsArrowsCollapse size={30} title="Show comment" onClick={() => setShowComments(!showComments)} />
+                    : <BsArrowsExpand size={30} title="Show comment" onClick={() => setShowComments(!showComments)} />}
             </Space>
         </CharacterName>
         {hasTurn && isActive && <CharacterName>

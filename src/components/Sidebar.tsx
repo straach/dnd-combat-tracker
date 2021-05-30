@@ -1,10 +1,11 @@
 
-import React, { useState, FunctionComponent } from 'react';
+import { Col, Layout, Row } from 'antd';
+import React, { FunctionComponent, useState } from 'react';
+import { BsPersonFill } from 'react-icons/bs';
+import { GiEvilMinion } from 'react-icons/gi';
 import styled from 'styled-components';
-import { IoMdClose } from 'react-icons/io';
-import { Button, Row, Col, Input, Layout } from 'antd';
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Sider } = Layout;
 
 const SideBarContainer = styled(Sider) <{ align: string }>`
     position: fixed;
@@ -15,8 +16,12 @@ const SideBarContainer = styled(Sider) <{ align: string }>`
     opacity: 0.9;
 `;
 
+const CollapseHandler = ({ isMonster }: { isMonster: boolean }) => {
+    const render = isMonster ? <><GiEvilMinion size={40} style={{ padding: 5 }} /></> : <BsPersonFill style={{ padding: 5 }} size={40} />
+    return render;
+}
 
-const Sidebar: FunctionComponent<any> = ({ align, children }) => {
+const Sidebar: FunctionComponent<any> = ({ align, children, isMonster }) => {
     const [collapsed, setCollapsed] = useState(true);
     return (<SideBarContainer
         width={'80%'}
@@ -24,6 +29,7 @@ const Sidebar: FunctionComponent<any> = ({ align, children }) => {
         collapsed={collapsed}
         onCollapse={setCollapsed}
         defaultCollapsed={true}
+        trigger={<CollapseHandler isMonster={isMonster} />}
         collapsedWidth={0}
         zeroWidthTriggerStyle={{}}
         align={align}
