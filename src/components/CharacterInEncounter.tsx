@@ -29,7 +29,7 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
         value.changeHitPoints(hitPoints);
         onChange(value);
     }
-    
+
     const handleCommentChange = (event: any) => {
         value.changeComment(event.target.value);
         onChange(value);
@@ -40,6 +40,7 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
     }
     const isMonster = value instanceof Monster;
     return (<ExpandableCharacterBox
+        hasHealthStats={isMonster}
         isPlayer={!isMonster}
         max_hit_points={value.max_hit_points}
         hit_points={value.hit_points}
@@ -57,17 +58,16 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
         <VerticalCenterContentCol span={8}>
             {value.name}  <Divider type="vertical" />{value.iniciative}
             {isMonster && <>
-            <Divider type="vertical"></Divider><Popover
-                content={<StatsBlockWide monster={value as Monster} />}>
-                <IoMdListBox title="stats" size={35} />
-            </Popover></>}
+                <Divider type="vertical"></Divider><Popover
+                    content={<StatsBlockWide monster={value as Monster} />}>
+                    <IoMdListBox title="stats" size={35} />
+                </Popover></>}
         </VerticalCenterContentCol>
-        <VerticalCenterContentCol span={14} style={{ height: '100%' }}>
-            <Space align="center">
-                <Conditions conditions={value.conditions} onChange={handleConditionChange} />
-
-                {isMonster && <StatItem title="Health" value={value.hit_points || 0} onChange={handleHitPointsChange} />}
-            </Space>
+        <VerticalCenterContentCol span={7} >
+            <Conditions conditions={value.conditions} onChange={handleConditionChange} />
+        </VerticalCenterContentCol>
+        <VerticalCenterContentCol span={7} >
+            {isMonster && <StatItem title="Health" value={value.hit_points || 0} units={'HP'} onChange={handleHitPointsChange} />}
         </VerticalCenterContentCol>
         <VerticalCenterContentCol span={1}>
             {isActive ? <Button size="large" onClick={() => handleHitPointsChange(0)} title="InstaKill">

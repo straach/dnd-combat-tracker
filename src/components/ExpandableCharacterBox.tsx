@@ -5,7 +5,7 @@ import { GiEvilMinion } from "react-icons/gi";
 import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import styled from 'styled-components';
 
-const Box = styled.div`
+const Box = styled(Row)`
     &:first-child {
         border-top-left-radius: 7px;
         border-top-right-radius: 7px;
@@ -54,23 +54,23 @@ const HealthBar = styled(Col)`
     height: 100%;
 `;
 interface IHealthStatusProps {
-    isPlayer: boolean;
+    hasHealthStats: boolean;
     hit_points: number;
     max_hit_points: number;
 }
-const HealthStatus = ({ isPlayer, hit_points, max_hit_points }: IHealthStatusProps) => {
+const HealthStatus = ({ hasHealthStats, hit_points, max_hit_points }: IHealthStatusProps) => {
     let healthColor = '';
     const percentageOf = (percentage: number, ofMaximum: number) => {
         return ofMaximum / 100 * percentage;
     }
-    if (!isPlayer) {
+    if (hasHealthStats) {
         healthColor = (hit_points <= percentageOf(10, max_hit_points) ? '#BB2020' :
             (hit_points <= percentageOf(50, max_hit_points) ? 'yellow'
                 : 'green'))
     }
     return <HealthBar span={1}
         style={{
-            backgroundColor: isPlayer ? 'gray' : healthColor
+            backgroundColor: hasHealthStats ? healthColor : 'gray'
         }}>
     </HealthBar >;
 }
@@ -85,6 +85,7 @@ interface IExpandableCharacterBox extends IHealthStatusProps {
     children: any;
     collapsedArea: any;
     style: any;
+    isPlayer: boolean;
 }
 const CONTENT_HEIGHT = 55;
 const ARROW_TOGGLE_HEIGHT = 15;
@@ -100,8 +101,8 @@ const ExpandableCharacterBox = ({ isPlayer, hit_points, max_hit_points, children
         <HealthStatus
             hit_points={hit_points}
             max_hit_points={max_hit_points}
-            isPlayer={isPlayer}></HealthStatus>
-        <StyledAttributes span={22} style={{ height: '100%' }}>
+            hasHealthStats={!isPlayer}></HealthStatus>
+        <StyledAttributes span={23} style={{ height: '100%' }}>
             <Row>
                 <VerticalCenterContentCol span={2}>
                     <span style={{ marginLeft: 5 }}><TypeLogo isPlayer={isPlayer} /></span>
