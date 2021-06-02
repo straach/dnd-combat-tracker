@@ -27,19 +27,20 @@ export default function PlayerList({ onJoinEncounter }: IPlayerList) {
     }
     const handleAddNewPlayer = () => {
         const newPlayerList = [...players];
-        newPlayerList.push({ uuid: uuid(), name: 'A', hit_points: 1, iniciative: 0, conditions: [] });
+        newPlayerList.push({ uuid: uuid(), name: '', hit_points: 1, iniciative: 0, conditions: [] });
         setPlayers(newPlayerList);
     }
-    return (<><div>{
-        players.map((player, index) => <PlayerInTeam
-            key={`${index}${players.length}`}
-            value={player}
-            onChange={c => handleUpdateCharacter(c, index)}
-            onRemove={() => handleRemovePlayer(index)}
-            onJoinEncounter={handleJoinEncounter} />)
-    }
-    </div>
-        <Button onClick={handleAddNewPlayer}>add</Button>
+    return (<>
+        <div>{
+            players.map((player, index) => <PlayerInTeam
+                key={`${index}${players.length}`}
+                value={player}
+                onChange={c => handleUpdateCharacter(c, index)}
+                onRemove={() => handleRemovePlayer(index)}
+                onJoinEncounter={handleJoinEncounter} />)
+        }
+        </div>
+        <Button onClick={handleAddNewPlayer}>Add Player</Button>
     </>
 
     );

@@ -1,9 +1,13 @@
 import { Col, Row } from 'antd';
 import React, { useState } from 'react';
-import { BsPersonFill } from "react-icons/bs";
-import { GiEvilMinion } from "react-icons/gi";
 import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import styled from 'styled-components';
+
+
+const VerticalCenterContentCol = styled(Col)`
+    display: flex;
+    align-items: center;
+`;
 
 const Box = styled(Row)`
     &:first-child {
@@ -33,10 +37,6 @@ const Box = styled(Row)`
     transition: 0.1s ease-in;
 `;
 
-export const VerticalCenterContentCol = styled(Col)`
-    display: flex;
-    align-items: center;
-`;
 
 const StyledAttributes = styled(Col)`
     font-family: 'Libre Baskerville', 'Lora', 'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif;
@@ -101,13 +101,13 @@ const ExpandableCharacterBox = ({ isPlayer = false, hasHealthStats, hit_points, 
             max_hit_points={max_hit_points}
             hasHealthStats={hasHealthStats}
             isPlayer={isPlayer}
-            />
-        <StyledAttributes span={hasHealthStats ? 23 : 24} style={{ height: '100%', marginTop: 10  }}>
+        />
+        <StyledAttributes span={hasHealthStats ? 23 : 24} style={{ height: '100%', marginTop: 10 }}>
             {children}
 
             {collapsedArea &&
                 <>{collapse &&
-                    <Row style={{ height: COMMENT_HEIGHT}}>
+                    <Row style={{ height: COMMENT_HEIGHT }}>
                         <Col span={24} style={{ justifyContent: 'center', display: 'flex', marginTop: 10 }}>{collapsedArea}</Col>
                     </Row>}
                     <Row style={{ height: ARROW_TOGGLE_HEIGHT }}>
@@ -122,5 +122,6 @@ const ExpandableCharacterBox = ({ isPlayer = false, hasHealthStats, hit_points, 
     </Box >);
 
 }
+ExpandableCharacterBox.Col = VerticalCenterContentCol;
 
 export default ExpandableCharacterBox;

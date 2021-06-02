@@ -13,7 +13,7 @@ const SideBarContainer = styled(Sider) <{ align: string }>`
     ${props => props.align === 'right' ? 'right' : 'left'}: 0px;
     z-index: 1;
     height: 100%;
-    opacity: 0.9;
+    opacity: 0.96;
 `;
 
 const CollapseHandler = ({ isMonster }: { isMonster: boolean }) => {

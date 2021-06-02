@@ -1,10 +1,9 @@
-import { Button, Divider, Input, Popover, Col, Row } from 'antd';
+import { Button, Col, Divider, Input, Popover, Row } from 'antd';
 import React from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsPersonFill } from 'react-icons/bs';
 import { GiDeathSkull, GiEvilMinion } from "react-icons/gi";
 import { IoMdListBox } from "react-icons/io";
-import styled from 'styled-components';
 import { IActionableCharacter } from '../models/ActionableCharacter';
 import Monster from '../models/Monster';
 import Conditions from './Condition';
@@ -12,11 +11,7 @@ import ExpandableCharacterBox from './ExpandableCharacterBox';
 import StatItem from './StatItem';
 import StatsBlockWide from './stats-block/StatsBlockWide';
 
-const VerticalCenterContentCol = styled(Col)`
-    display: flex;
-    align-items: center;
-`;
-
+const { Col: CenteredCol } = ExpandableCharacterBox;
 const TypeLogo = ({ isPlayer }: { isPlayer: boolean }) => {
     if (isPlayer) {
         return <BsPersonFill size={40} />
@@ -64,32 +59,32 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
         }}>
 
         <Row>
-            <VerticalCenterContentCol span={2}>
+            <CenteredCol span={2}>
                 <span style={{ marginLeft: 5 }}><TypeLogo isPlayer={!isMonster} /></span>
-            </VerticalCenterContentCol>
+            </CenteredCol>
             <Col span={22}>
                 <Row style={{ height: '100%' }}>
-                    <VerticalCenterContentCol span={8}>
+                    <CenteredCol span={8}>
                         {value.name}  <Divider type="vertical" />{value.iniciative}
                         {isMonster && <>
                             <Divider type="vertical"></Divider><Popover
                                 content={<StatsBlockWide monster={value as Monster} />}>
                                 <IoMdListBox title="stats" size={35} />
                             </Popover></>}
-                    </VerticalCenterContentCol>
-                    <VerticalCenterContentCol span={7} >
+                    </CenteredCol>
+                    <CenteredCol span={7} >
                         <Conditions conditions={value.conditions} onChange={handleConditionChange} />
-                    </VerticalCenterContentCol>
-                    <VerticalCenterContentCol span={7} >
+                    </CenteredCol>
+                    <CenteredCol span={7} >
                         {isMonster && <StatItem title="Health" value={value.hit_points || 0} units={'HP'} onChange={handleHitPointsChange} />}
-                    </VerticalCenterContentCol>
-                    <VerticalCenterContentCol span={1}>
+                    </CenteredCol>
+                    <CenteredCol span={1}>
                         {isActive ? <Button size="large" onClick={() => handleHitPointsChange(0)} title="InstaKill">
                             <GiDeathSkull size={30} />
                         </Button> :
                             <Button onClick={onRemove} size="large" ><AiOutlineDelete title="Delete" size={30} /></Button>
                         }
-                    </VerticalCenterContentCol>
+                    </CenteredCol>
                 </Row>
             </Col>
         </Row>

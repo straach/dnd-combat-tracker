@@ -1,7 +1,7 @@
-import { Popover, Select, Tag } from 'antd';
+import { Select } from 'antd';
 import React, { useEffect, useState } from 'react';
 import IDnd5eApiReference from '../models/IDnd5eApiReference';
-import { getConditions, getCondition } from '../resources/dndapi';
+import { getConditions } from '../resources/dndapi';
 
 
 interface IConditionProps {
@@ -22,7 +22,7 @@ const Conditions = ({ conditions = [], onChange }: IConditionProps) => {
             ;
     }, []);
     return (<Select
-    size="small"
+        size="small"
         mode="multiple"
         showArrow
         allowClear
