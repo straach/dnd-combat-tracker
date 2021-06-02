@@ -54,77 +54,70 @@ const HealthBar = styled(Col)`
     height: 100%;
 `;
 interface IHealthStatusProps {
-    hasHealthStats: boolean;
-    hit_points: number;
-    max_hit_points: number;
+    hasHealthStats?: boolean;
+    hit_points?: number;
+    max_hit_points?: number;
+    isPlayer?: boolean;
+    span?: number;
 }
-const HealthStatus = ({ hasHealthStats, hit_points, max_hit_points }: IHealthStatusProps) => {
+const HealthStatus = ({ isPlayer, hasHealthStats, hit_points = 1, max_hit_points = 1, span = 24 }: IHealthStatusProps) => {
     let healthColor = '';
     const percentageOf = (percentage: number, ofMaximum: number) => {
         return ofMaximum / 100 * percentage;
     }
-    if (hasHealthStats) {
+    if (!isPlayer) {
         healthColor = (hit_points <= percentageOf(10, max_hit_points) ? '#BB2020' :
             (hit_points <= percentageOf(50, max_hit_points) ? 'yellow'
                 : 'green'))
     }
-    return <HealthBar span={1}
+    return <HealthBar span={span}
         style={{
-            backgroundColor: hasHealthStats ? healthColor : 'gray'
+            backgroundColor: isPlayer ? 'gray' : healthColor
         }}>
     </HealthBar >;
 }
 
-const TypeLogo = ({ isPlayer }: { isPlayer: boolean }) => {
-    if (isPlayer) {
-        return <BsPersonFill size={40} />
-    }
-    return <GiEvilMinion size={40} />
-}
 interface IExpandableCharacterBox extends IHealthStatusProps {
     children: any;
-    collapsedArea: any;
-    style: any;
-    isPlayer: boolean;
+    collapsedArea?: any;
+    style?: any;
+
 }
 const CONTENT_HEIGHT = 55;
 const ARROW_TOGGLE_HEIGHT = 15;
 const COMMENT_HEIGHT = 70;
-const ExpandableCharacterBox = ({ isPlayer, hit_points, max_hit_points, children, collapsedArea, style }: IExpandableCharacterBox) => {
+const ExpandableCharacterBox = ({ isPlayer = false, hasHealthStats, hit_points, max_hit_points, children, collapsedArea = false, style = {} }: IExpandableCharacterBox) => {
 
-    const [showComments, setShowComments] = useState(false);
+    const [collapse, setCollapse] = useState(false);
     return (<Box style={{
-        height: showComments ?
+        height: collapse ?
             CONTENT_HEIGHT + COMMENT_HEIGHT + ARROW_TOGGLE_HEIGHT :
             CONTENT_HEIGHT + ARROW_TOGGLE_HEIGHT, ...style
     }}>
+
         <HealthStatus
+            span={1}
             hit_points={hit_points}
             max_hit_points={max_hit_points}
-            hasHealthStats={!isPlayer}></HealthStatus>
-        <StyledAttributes span={23} style={{ height: '100%' }}>
-            <Row>
-                <VerticalCenterContentCol span={2}>
-                    <span style={{ marginLeft: 5 }}><TypeLogo isPlayer={isPlayer} /></span>
-                </VerticalCenterContentCol>
-                <Col span={22}>
-                    <Row style={{ height: CONTENT_HEIGHT }}>
-                        {children}
-                    </Row>
-                </Col>
-            </Row>
+            hasHealthStats={hasHealthStats}
+            isPlayer={isPlayer}
+            />
+        <StyledAttributes span={hasHealthStats ? 23 : 24} style={{ height: '100%', marginTop: 10  }}>
+            {children}
 
-            {showComments &&
-                <Row style={{ height: COMMENT_HEIGHT }}>
-                    <Col span={24} style={{ justifyContent: 'center', display: 'flex' }}>{collapsedArea}</Col>
-                </Row>}
-            <Row style={{ height: ARROW_TOGGLE_HEIGHT }}>
-                <Col span={24} style={{ justifyContent: 'center', display: 'flex' }}>
-                    <span style={{ cursor: 'pointer' }}>{showComments ?
-                        <VscTriangleUp onClick={() => setShowComments(!showComments)} /> :
-                        <VscTriangleDown onClick={() => setShowComments(!showComments)} />}</span>
-                </Col>
-            </Row>
+            {collapsedArea &&
+                <>{collapse &&
+                    <Row style={{ height: COMMENT_HEIGHT}}>
+                        <Col span={24} style={{ justifyContent: 'center', display: 'flex', marginTop: 10 }}>{collapsedArea}</Col>
+                    </Row>}
+                    <Row style={{ height: ARROW_TOGGLE_HEIGHT }}>
+                        <Col span={24} style={{ justifyContent: 'center', display: 'flex' }}>
+                            <span style={{ cursor: 'pointer' }}>{collapse ?
+                                <VscTriangleUp onClick={() => setCollapse(!collapse)} /> :
+                                <VscTriangleDown onClick={() => setCollapse(!collapse)} />}</span>
+                        </Col>
+                    </Row>
+                </>}
         </StyledAttributes>
     </Box >);
 

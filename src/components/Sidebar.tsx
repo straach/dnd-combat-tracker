@@ -34,8 +34,8 @@ const Sidebar: FunctionComponent<any> = ({ align, children, isMonster }) => {
         zeroWidthTriggerStyle={{}}
         align={align}
         reverseArrow={align === 'right'}>
-        {!collapsed && <Row style={{ height: '100%', backgroundColor: 'white' }}>
-            <Col style={{ height: '100%', width: '100%', overflow: 'auto' }}>{children}</Col>
+        {!collapsed && <Row style={{ height: '100%' }}>
+            <Col style={{ height: '100%', width: '100%', overflow: 'auto', margin: 20 }}>{children}</Col>
         </Row>}
     </SideBarContainer>);
 };

@@ -17,10 +17,10 @@ interface IStatItem {
 const StatItem = ({ title, value, units, onChange }: IStatItem) => {
     const { isObscured } = useContext<IObscureDataContext>(ObscureDataContext);
     return (<div style={{ marginLeft: 10, textAlign: 'center', fontSize: 16, width: 170 }}>
-        {isObscured ?
-            <Popover content={<PopoverContent title={title} value={value} units={units} onChange={onChange} />}>
+        {isObscured ? <span style={{ cursor: 'pointer' }}>
+            <Popover content={<PopoverContent title={title} value={value} units={units} onChange={onChange} />} >
                 {title}
-            </Popover> :
+            </Popover> </span> :
             <>{title}: <InputNumber size="small" value={value} onChange={onChange} style={{ width: 50, marginLeft: 10 }} /> {units}</>
         }
     </div >);

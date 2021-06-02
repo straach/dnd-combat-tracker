@@ -30,7 +30,7 @@ export default function PlayerList({ onJoinEncounter }: IPlayerList) {
         newPlayerList.push({ uuid: uuid(), name: 'A', hit_points: 1, iniciative: 0, conditions: [] });
         setPlayers(newPlayerList);
     }
-    return (<>{
+    return (<><div>{
         players.map((player, index) => <PlayerInTeam
             key={`${index}${players.length}`}
             value={player}
@@ -38,7 +38,7 @@ export default function PlayerList({ onJoinEncounter }: IPlayerList) {
             onRemove={() => handleRemovePlayer(index)}
             onJoinEncounter={handleJoinEncounter} />)
     }
-
+    </div>
         <Button onClick={handleAddNewPlayer}>add</Button>
     </>
 

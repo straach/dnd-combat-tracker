@@ -4,6 +4,7 @@ import { IPlayer } from '../models/Player';
 import { BsBoxArrowRight } from 'react-icons/bs';
 import { AiOutlineDelete } from 'react-icons/ai';
 import ICharacter from '../models/ICharacter';
+import ExpandableCharacterBox from './ExpandableCharacterBox';
 
 interface IPlayerInputProps {
     value: IPlayer;
@@ -13,6 +14,11 @@ interface IPlayerInputProps {
 }
 
 const PlayerInTeam: FunctionComponent<IPlayerInputProps> = ({ value, onChange, onJoinEncounter, onRemove }) => {
+    return <ExpandableCharacterBox
+        hasHealthStats={false}
+    >
+        asd
+    </ExpandableCharacterBox>
     return (<Row style={{ backgroundColor: 'grey' }}>
         <Col>
             Name: <Input value={value.name} onChange={(event) => onChange({ ...value, name: event.target.value })} />

@@ -20,7 +20,7 @@ export default function StatsBlockWide({ monster }: IStasBlockWideProps) {
     useEffect(() => {
         const bounds = refEl.current?.getBoundingClientRect() as any || {};
         setWidthHeight([bounds.width, bounds.height]);
-    });
+    }, [monster]);
     return (<div style={{ width: widthHeight[0], height: widthHeight[1] }}>
         <StyledStatsContainer ref={refEl as any}>
             <div className="stat-block wide">
