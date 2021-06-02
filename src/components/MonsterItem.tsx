@@ -5,7 +5,6 @@ import { IoMdListBox } from "react-icons/io";
 import IBaseMonster from '../models/IBaseMonster';
 import IMonster from '../models/Monster';
 import { getMonster } from '../resources/dndapi';
-import CharacterBox from './CharacterBox';
 import StatsBlockWide from './stats-block/StatsBlockWide';
 import { cloneDeep } from 'lodash';
 import Player from '../models/Player';

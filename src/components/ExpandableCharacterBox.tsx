@@ -4,7 +4,34 @@ import { BsPersonFill } from "react-icons/bs";
 import { GiEvilMinion } from "react-icons/gi";
 import { VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 import styled from 'styled-components';
-import Box from './CharacterBox';
+
+const Box = styled.div`
+    &:first-child {
+        border-top-left-radius: 7px;
+        border-top-right-radius: 7px;
+    }
+    &:first-child .ant-col-1 {
+        border-top-left-radius: 7px;
+    }
+    &:last-child {
+        border-bottom-left-radius: 7px;
+        border-bottom-right-radius: 7px;
+    }
+    &:last-child .ant-col-1 {
+        border-bottom-left-radius: 7px;
+    }
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: flex-start;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+    height: 60px;
+    transition: 0.1s ease-in;
+`;
 
 export const VerticalCenterContentCol = styled(Col)`
     display: flex;
@@ -59,7 +86,7 @@ interface IExpandableCharacterBox extends IHealthStatusProps {
     collapsedArea: any;
     style: any;
 }
-const CONTENT_HEIGHT = 60;
+const CONTENT_HEIGHT = 55;
 const ARROW_TOGGLE_HEIGHT = 15;
 const COMMENT_HEIGHT = 70;
 const ExpandableCharacterBox = ({ isPlayer, hit_points, max_hit_points, children, collapsedArea, style }: IExpandableCharacterBox) => {

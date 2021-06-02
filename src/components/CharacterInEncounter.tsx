@@ -29,11 +29,7 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
         value.changeHitPoints(hitPoints);
         onChange(value);
     }
-    const handleArmorClassChange = (hitPoints: number) => {
-        // value.change(hitPoints);
-        // onChange();
-        //armorClass => onChange({ ...value, armor_class: armorClass })
-    }
+    
     const handleCommentChange = (event: any) => {
         value.changeComment(event.target.value);
         onChange(value);
@@ -67,7 +63,7 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
             </Popover></>}
         </VerticalCenterContentCol>
         <VerticalCenterContentCol span={14} style={{ height: '100%' }}>
-            <Space align="end">
+            <Space align="center">
                 <Conditions conditions={value.conditions} onChange={handleConditionChange} />
 
                 {isMonster && <StatItem title="Health" value={value.hit_points || 0} onChange={handleHitPointsChange} />}

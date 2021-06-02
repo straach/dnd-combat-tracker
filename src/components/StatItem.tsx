@@ -2,10 +2,6 @@ import { Card, InputNumber, Popover } from 'antd';
 import React, { useContext } from 'react';
 import { IObscureDataContext, ObscureDataContext } from '../obscure-data-context';
 
-interface IPopoverContent {
-    value: number;
-    onChange: (newVal: number) => void;
-}
 const PopoverContent = ({ title, value, onChange }: IStatItem) => {
     return <Card title={title} bordered={false} >
         <InputNumber size="large" value={value} onChange={onChange} style={{ width: 50 }} />
@@ -19,13 +15,15 @@ interface IStatItem {
 }
 const StatItem = ({ title, value, onChange }: IStatItem) => {
     const { isObscured } = useContext<IObscureDataContext>(ObscureDataContext);
-    return (<div style={{ width: 60, border: 'solid 1px', height: 50, marginRight: 10, textAlign: 'center' }}>
-        <div>{title}</div>
-        {isObscured ? <Popover content={<PopoverContent title={title} value={value} onChange={onChange} />}>
-            ---
-        </Popover> :
-            <InputNumber size="small" value={value} onChange={onChange} style={{ width: 50 }} />}
-    </div >);
+    return (<div style={{ marginLeft: 10, textAlign: 'center', fontSize: 16 }}>
+        <div>
+            {isObscured ?
+                <Popover content={<PopoverContent title={title} value={value} onChange={onChange} />}>
+                    {title}
+                </Popover> :
+                <>{title}: <InputNumber size="small" value={value} onChange={onChange} style={{ width: 50, marginLeft: 10 }} /> HP</>
+            }
+        </div ></div>);
 }
 
 export default StatItem;

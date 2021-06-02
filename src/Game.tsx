@@ -75,10 +75,10 @@ function Game() {
             <Checkbox checked={isObscured} onChange={toggleIsObscured} /> Obscure Data
             <Button onClick={handleToggleStartEncounter}>{encounter.isStarted ? 'End' : 'Start'}</Button>
             <Button onClick={handleClearEncounter}>Clear</Button>
-        <>
-                <Button onClick={() => handlePrevTurn()}>prev</Button>
-                <Button onClick={() => handleNextTurn()} type="primary">next</Button>
-                </>
+            <><Divider type="vertical"></Divider>
+              <Button onClick={() => handlePrevTurn()}>prev</Button>
+              <Button onClick={() => handleNextTurn()} type="primary">next</Button>
+            </>
           </Space>
         </Col>
       </Row>
@@ -92,25 +92,29 @@ function Game() {
     <Content>
       <Main>
         <Divider plain>Active</Divider>
-        {encounter.aliveCharacters.map((char: IActionableCharacter, index: number) =>
-          <CharacterInEncounter
-            isActive={encounter.isStarted}
-            key={`${char.name}+${index}`}
-            value={char}
-            hasTurn={char === encounter.currentCharacter && encounter.isStarted}
-            onChange={handleUpdatePlayerInEncounter}
-            onRemove={() => handleLeaveEncounter(char)}
-          />)}
-        {deadCharacters.length > 0 &&
-          <><Divider plain>Dead</Divider>
-            {deadCharacters.map((char: IActionableCharacter, index: number) => <CharacterInEncounter
+        <div>
+          {encounter.aliveCharacters.map((char: IActionableCharacter, index: number) =>
+            <CharacterInEncounter
               isActive={encounter.isStarted}
               key={`${char.name}+${index}`}
               value={char}
-              hasTurn={false}
+              hasTurn={char === encounter.currentCharacter && encounter.isStarted}
               onChange={handleUpdatePlayerInEncounter}
-              onRemove={() => { }}
+              onRemove={() => handleLeaveEncounter(char)}
             />)}
+        </div>
+        {deadCharacters.length > 0 &&
+          <><Divider plain>Dead</Divider>
+            <div>
+              {deadCharacters.map((char: IActionableCharacter, index: number) => <CharacterInEncounter
+                isActive={encounter.isStarted}
+                key={`${char.name}+${index}`}
+                value={char}
+                hasTurn={false}
+                onChange={handleUpdatePlayerInEncounter}
+                onRemove={() => { }}
+              />)}
+            </div>
           </>
         }
       </Main>
@@ -118,7 +122,6 @@ function Game() {
     <Sidebar isMonster={true} align="right" >
       <MonsterList onJoinEncounter={handleMultijoinEncounter} />
     </Sidebar>
-    <Footer style={{ textAlign: 'center' }}>-</Footer>
   </Layout >);
 }
 
