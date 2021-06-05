@@ -1,8 +1,10 @@
 import { Button, Col, Divider, Input, Popover, Row } from 'antd';
 import React from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
+import { FaFirstAid } from 'react-icons/fa';
+import { ImAidKit } from 'react-icons/im';
 import { BsPersonFill } from 'react-icons/bs';
-import { GiDeathSkull, GiEvilMinion } from "react-icons/gi";
+import { GiDeathSkull, GiEvilMinion, GiHealthNormal } from "react-icons/gi";
 import { IoMdListBox } from "react-icons/io";
 import { IActionableCharacter } from '../models/ActionableCharacter';
 import Monster from '../models/Monster';
@@ -12,6 +14,33 @@ import StatItem from './StatItem';
 import StatsBlockWide from './stats-block/StatsBlockWide';
 
 const { Col: CenteredCol } = ExpandableCharacterBox;
+
+interface IQuickActionButton {
+    isActive: boolean;
+    isAlive: boolean;
+    onInstaKill: () => void;
+    onRevive: () => void;
+    onRemove: () => void;
+}
+const QuickActionButton = ({ isActive, isAlive, onInstaKill, onRevive, onRemove }: IQuickActionButton) => {
+    const instaKill = <Button size="large" onClick={onInstaKill} title="InstaKill">
+        <GiDeathSkull size={30} />
+    </Button>;
+    const revive = <Button size="large" onClick={onRevive} title="Revive">
+        <ImAidKit title="Revive" size={30} />
+    </Button>;
+    const deleteBtn = <Button onClick={onRemove} size="large" title="Delete" ><AiOutlineDelete title="Delete" size={30} /></Button>;
+
+    if (!isActive) {
+        return deleteBtn;
+    }
+
+    if (isAlive) {
+        return instaKill;
+    }
+
+    return revive;
+}
 const TypeLogo = ({ isPlayer }: { isPlayer: boolean }) => {
     if (isPlayer) {
         return <BsPersonFill size={40} />
@@ -55,7 +84,7 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
             transform: hasTurn ?
                 'scale(1.05, 1.05)' :
                 'none',
-            opacity: ((value.hit_points || 0) <= 0 ? 0.3 : 1)
+            opacity: (value.isAlive ? 1 : 0.3)
         }}>
 
         <Row>
@@ -79,11 +108,13 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
                         {isMonster && <StatItem title="Health" value={value.hit_points || 0} units={'HP'} onChange={handleHitPointsChange} />}
                     </CenteredCol>
                     <CenteredCol span={1}>
-                        {isActive ? <Button size="large" onClick={() => handleHitPointsChange(0)} title="InstaKill">
-                            <GiDeathSkull size={30} />
-                        </Button> :
-                            <Button onClick={onRemove} size="large" ><AiOutlineDelete title="Delete" size={30} /></Button>
-                        }
+                        <QuickActionButton
+                            isActive={isActive}
+                            isAlive={value.isAlive}
+                            onInstaKill={() => handleHitPointsChange(0)}
+                            onRemove={onRemove}
+                            onRevive={() => handleHitPointsChange(1)}
+                        />
                     </CenteredCol>
                 </Row>
             </Col>

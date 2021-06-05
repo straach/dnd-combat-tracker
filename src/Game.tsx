@@ -116,7 +116,7 @@ function Game() {
                 value={char}
                 hasTurn={false}
                 onChange={handleUpdatePlayerInEncounter}
-                onRemove={() => { }}
+                onRemove={() => handleLeaveEncounter(char)}
               />)}
             </div>
           </>

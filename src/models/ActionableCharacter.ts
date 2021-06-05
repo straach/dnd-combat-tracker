@@ -5,6 +5,7 @@ import IUnique from "./IUnique";
 
 export interface IActionableCharacter extends ICharacterActions, ICharacter, IUnique {
     max_hit_points: number;
+    isAlive: boolean;
 };
 
 class ActionableCharacter implements IActionableCharacter {
@@ -47,6 +48,10 @@ class ActionableCharacter implements IActionableCharacter {
     changeConditions(conditions: string[]) {
         this.conditions = conditions;
     };
+
+    get isAlive() {
+        return this.hit_points > 0;
+    }
 
 }
 export default ActionableCharacter;
