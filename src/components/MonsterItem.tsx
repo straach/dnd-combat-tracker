@@ -52,14 +52,7 @@ const MonsterItem = ({ monster, onJoinEncounter }: IMonsterItemProps) => {
             <Col span={2}>
                 <Button onClick={handleJoinPress} size="large"><BsBoxArrowLeft size={30} /></Button>
             </Col>
-            <Col offset={1} span={4}>
-                Amount:  <InputNumber min={0} value={amount} onChange={setAmount} />
-
-            </Col>
-            <Col offset={1} span={4}>
-                iniciative: <InputNumber min={0} value={iniciative} onChange={setIniciative} />
-            </Col>
-            <Col offset={1} span={4}>
+            <Col offset={1} span={1}>
                 <Popover
                     visible={show}
                     onVisibleChange={handleOnVisibleChange}
@@ -67,9 +60,18 @@ const MonsterItem = ({ monster, onJoinEncounter }: IMonsterItemProps) => {
                     <IoMdListBox size={40} />
                 </Popover>
             </Col>
-            <Col span={6}>
+            <Col offset={1} span={8}>
                 {monster.name} {monster.size} {monster.type} {monster.hit_points}
             </Col>
+            <Col offset={1} span={4}>
+                Amount:  <InputNumber min={0} value={amount} onChange={setAmount} />
+
+            </Col>
+            <Col offset={1} span={4}>
+                iniciative: <InputNumber min={0} value={iniciative} onChange={setIniciative} />
+            </Col>
+
+         
         </Row>
     </ExpandableCharacterBox >
 }

@@ -59,13 +59,15 @@ export function MonsterList({ onJoinEncounter }: IMonsterListProps) {
                     </Col >
                 </Row ></> :
                 <Row style={{ flex: '1 1 auto', alignSelf: 'auto', padding: 5, width: '100%', overflow: 'auto' }}>
-                    <Col offset={1} span={22} style={{ height: '100%', overflow: 'auto' }}>
-                        {find.length > 0 ? find.map((monster, index) => <MonsterItem
+                    <Col offset={1} span={22} style={{}}>
+                        <>{find.length > 0 ? find.map((monster, index) => <MonsterItem
                             key={`${monster.name}${index}`}
                             monster={monster}
                             onJoinEncounter={handleOnJoinEncounter}
                         />)
                             : <>Please use search term</>}
+                            <Divider />
+                        </>
                     </Col>
                 </Row>
                 // <div  >
