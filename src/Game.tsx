@@ -1,4 +1,5 @@
 import { Button, Checkbox, Col, Divider, Layout, Row, Space, Typography } from 'antd';
+import { isEmpty } from 'lodash';
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import './App.css';
@@ -62,12 +63,11 @@ function Game() {
   const handleClearEncounter = () => {
     setEncounterData({} as IEncounterData);
   }
-  const deadCharacters = encounter.deadCharacters;
   return (<Layout style={{ minHeight: '100%', height: '100%' }}>
     <Header className="header" style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
       <Row justify="space-between">
         <Col span={6}>
-          <Title level={3} style={{ color: 'white', marginTop: 13  }}>DnD Combat Tracker</Title>
+          <Title level={3} style={{ color: 'white', marginTop: 13 }}>DnD Combat Tracker</Title>
         </Col>
         <Col>
           <Space>
@@ -96,22 +96,32 @@ function Game() {
     </Sidebar>
     <Content>
       <Main>
-        <Divider plain>Active</Divider>
-        <div>
-          {encounter.aliveCharacters.map((char: IActionableCharacter, index: number) =>
-            <CharacterInEncounter
-              isActive={encounter.isStarted}
-              key={`${char.name}+${index}`}
-              value={char}
-              hasTurn={char === encounter.currentCharacter && encounter.isStarted}
-              onChange={handleUpdatePlayerInEncounter}
-              onRemove={() => handleLeaveEncounter(char)}
-            />)}
-        </div>
-        {deadCharacters.length > 0 &&
+        {isEmpty(encounter.aliveCharacters)
+          && isEmpty(encounter.deadCharacters) &&
+          <Row align="middle" justify="center">
+            <Col>
+              <Title level={4}>Start adding characters and monsters in the menus on the side</Title>
+            </Col>
+          </Row>
+        }
+
+        {encounter.aliveCharacters.length > 0 &&
+          <><Divider plain>Active</Divider><div>
+            {encounter.aliveCharacters.map((char: IActionableCharacter, index: number) =>
+              <CharacterInEncounter
+                isActive={encounter.isStarted}
+                key={`${char.name}+${index}`}
+                value={char}
+                hasTurn={char === encounter.currentCharacter && encounter.isStarted}
+                onChange={handleUpdatePlayerInEncounter}
+                onRemove={() => handleLeaveEncounter(char)}
+              />)}
+          </div></>}
+
+        {encounter.deadCharacters.length > 0 &&
           <><Divider plain>Dead</Divider>
             <div>
-              {deadCharacters.map((char: IActionableCharacter, index: number) => <CharacterInEncounter
+              {encounter.deadCharacters.map((char: IActionableCharacter, index: number) => <CharacterInEncounter
                 isActive={encounter.isStarted}
                 key={`${char.name}+${index}`}
                 value={char}
@@ -123,7 +133,7 @@ function Game() {
           </>
         }
       </Main>
-    </Content>
+    </Content >
     <Sidebar
       title={'Add Monster to Encounter'}
       isMonster={true}
