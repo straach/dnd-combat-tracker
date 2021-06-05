@@ -26,13 +26,12 @@ const CollapseHandler = ({ isMonster }: { isMonster: boolean }) => {
     return render;
 }
 
-const Sidebar: FunctionComponent<any> = ({ align, children, isMonster, title }) => {
-    const [collapsed, setCollapsed] = useState(true);
+const Sidebar: FunctionComponent<any> = ({ collapsed, onCollapsedChange, align, children, isMonster, title }) => {
     return (<SideBarContainer
         width={'80%'}
         collapsible
         collapsed={collapsed}
-        onCollapse={setCollapsed}
+        onCollapse={onCollapsedChange}
         defaultCollapsed={true}
         trigger={<CollapseHandler isMonster={isMonster} />}
         collapsedWidth={0}

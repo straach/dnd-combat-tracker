@@ -1,6 +1,5 @@
-import { Button, Col, Divider, Layout, Row, Space, Checkbox } from 'antd';
-import React, { useEffect } from 'react';
-import { useContext } from 'react';
+import { Button, Checkbox, Col, Divider, Layout, Row, Space } from 'antd';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import './App.css';
 import CharacterInEncounter from './components/CharacterInEncounter';
@@ -11,7 +10,6 @@ import useLocalStorage from './hooks/useLocalStorageHook';
 import { IActionableCharacter } from './models/ActionableCharacter';
 import Encounter, { IEncounterData } from './models/Encounter';
 import { IObscureDataContext, ObscureDataContext } from './obscure-data-context';
-import { getAllMonsters } from './resources/dndapi';
 
 const { Header, Content, Footer } = Layout;
 const Main = styled.div`
@@ -24,6 +22,7 @@ const Main = styled.div`
 `;
 
 function Game() {
+  const [expandedSide, setExpandedSide] = useState<'left' | 'right' | null>(null);
   const [encounterData, setEncounterData] = useLocalStorage<IEncounterData>('charactersInEncounter', {} as IEncounterData);
   const { isObscured, toggleIsObscured } = useContext<IObscureDataContext>(ObscureDataContext);
   const encounter = new Encounter(encounterData);
@@ -84,7 +83,12 @@ function Game() {
       </Row>
     </Header>
 
-    <Sidebar title={'Players in Adventure'}>
+    <Sidebar
+      title={'Players in Adventure'}
+      collapsed={expandedSide !== 'left'}
+      onCollapsedChange={(collapsed: boolean) =>
+        setExpandedSide(collapsed ? null : 'left')}
+    >
       <PlayerList
         onJoinEncounter={handleJoinEncounter}
       />
@@ -119,7 +123,14 @@ function Game() {
         }
       </Main>
     </Content>
-    <Sidebar title={'Add Monster to Encounter'} isMonster={true} align="right" >
+    <Sidebar
+      title={'Add Monster to Encounter'}
+      isMonster={true}
+      align="right"
+      collapsed={expandedSide !== 'right'}
+      onCollapsedChange={(collapsed: boolean) =>
+        setExpandedSide(collapsed ? null : 'right')}
+    >
       <MonsterList onJoinEncounter={handleMultijoinEncounter} />
     </Sidebar>
   </Layout >);

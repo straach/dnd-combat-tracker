@@ -34,17 +34,19 @@ export default function PlayerList({ onJoinEncounter }: IPlayerList) {
     }
     return (<>
         <Divider />
-        <div>{
-            players.map((player, index) => <PlayerInTeam
-                key={`${index}${players.length}`}
-                value={player}
-                onChange={c => handleUpdateCharacter(c, index)}
-                onRemove={() => handleRemovePlayer(index)}
-                onJoinEncounter={handleJoinEncounter} />)
-        }
-        </div>
+        <Row >
+            <Col offset={1} span={22}>
+                {
+                    players.map((player, index) => <PlayerInTeam
+                        key={`${index}${players.length}`}
+                        value={player}
+                        onChange={c => handleUpdateCharacter(c, index)}
+                        onRemove={() => handleRemovePlayer(index)}
+                        onJoinEncounter={handleJoinEncounter} />)
+                }</Col>
+        </Row>
         <Divider />
-        <Row ><Col span={3}>
+        <Row ><Col offset={1} span={3}>
             <Button onClick={handleAddNewPlayer}>Add new player</Button>
         </Col></Row>
     </>

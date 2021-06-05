@@ -58,6 +58,7 @@ export function MonsterList({ onJoinEncounter }: IMonsterListProps) {
 
                     </Col >
                 </Row ></> :
+                <><Divider>Results</Divider>
                 <Row style={{ flex: '1 1 auto', alignSelf: 'auto', padding: 5, width: '100%', overflow: 'auto' }}>
                     <Col offset={1} span={22} style={{}}>
                         <>{find.length > 0 ? find.map((monster, index) => <MonsterItem
@@ -69,20 +70,7 @@ export function MonsterList({ onJoinEncounter }: IMonsterListProps) {
                             <Divider />
                         </>
                     </Col>
-                </Row>
-                // <div  >
-                //     <Divider>Results</Divider>
-                //     <Row justify="center">
-                //         <Col offset={1} span={22} style={{ height: '100%', overflow: 'auto' }}>
-                //             {find.length > 0 ? find.map((monster, index) => <MonsterItem
-                //                 key={`${monster.name}${index}`}
-                //                 monster={monster}
-                //                 onJoinEncounter={handleOnJoinEncounter}
-                //             />)
-                //                 : <>Please use search term</>}
-                //         </Col >
-                //     </Row >
-                // </div>
+                </Row></>
             }
         </Content >
 
