@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Game from './Game';
-import { IObscureDataContext, ObscureDataContext } from './obscure-data-context';
+import { ObscureDataContext } from './obscure-data-context';
 
 export interface IAppProps {
 }

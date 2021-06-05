@@ -11,7 +11,7 @@ import { IActionableCharacter } from './models/ActionableCharacter';
 import Encounter, { IEncounterData } from './models/Encounter';
 import { IObscureDataContext, ObscureDataContext } from './obscure-data-context';
 
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 const Main = styled.div`
   width: 80%;
   height: 100%;

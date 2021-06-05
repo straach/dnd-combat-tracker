@@ -1,6 +1,5 @@
 import * as React from 'react';
 import IMonster from '../../models/Monster';
-import NameDescItem from './NameDescItem';
 import StatActions from './StatActions';
 
 export interface IStatsSectionRightProps {

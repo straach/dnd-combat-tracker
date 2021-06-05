@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import Game from './Game';
-import reportWebVitals from './reportWebVitals';
-import { ObscureDataContext } from './obscure-data-context';
 import { App } from './App';
+import './index.css';
+import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,11 +1,10 @@
-import { Button, Row, Col, Divider, Typography } from 'antd';
+import { Button, Row, Col, Divider } from 'antd';
 import React from 'react';
 import { uuid } from 'uuidv4';
 import useLocalStorage from '../hooks/useLocalStorageHook';
 import Player, { IPlayer } from '../models/Player';
 import PlayerInTeam from './PlayerInTeam';
 
-const { Title } = Typography;
 
 interface IPlayerList {
     onJoinEncounter: (players: Player) => void

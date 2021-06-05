@@ -1,12 +1,7 @@
 import moment from 'moment';
 import { IActionableCharacter } from './ActionableCharacter';
-import ICharacter from './ICharacter';
-import ICharacterActions from './ICharacterActions';
-import IUnique from './IUnique';
-import Monster from './Monster';
-import IMonster from './Monster';
-import Player from './Player';
-import IPlayer from './Player';
+import { default as IMonster, default as Monster } from './Monster';
+import { default as IPlayer, default as Player } from './Player';
 
 export interface IEncounterData {
     round: number;

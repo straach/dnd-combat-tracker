@@ -1,10 +1,9 @@
 import { Button, Col, Divider, Input, Popover, Row } from 'antd';
 import React from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
-import { FaFirstAid } from 'react-icons/fa';
-import { ImAidKit } from 'react-icons/im';
 import { BsPersonFill } from 'react-icons/bs';
-import { GiDeathSkull, GiEvilMinion, GiHealthNormal } from "react-icons/gi";
+import { GiDeathSkull, GiEvilMinion } from "react-icons/gi";
+import { ImAidKit } from 'react-icons/im';
 import { IoMdListBox } from "react-icons/io";
 import { IActionableCharacter } from '../models/ActionableCharacter';
 import Monster from '../models/Monster';

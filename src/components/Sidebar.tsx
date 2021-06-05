@@ -1,6 +1,6 @@
 
 import { Col, Layout, Row, Typography } from 'antd';
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { BsPersonFill } from 'react-icons/bs';
 import { GiEvilMinion } from 'react-icons/gi';
 import styled from 'styled-components';

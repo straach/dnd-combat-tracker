@@ -1,5 +1,5 @@
-import IDnd5eApiReference from "../models/IDnd5eApiReference"
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import IDnd5eApiReference from "../models/IDnd5eApiReference";
 
 interface IGenericApiReference {
     value?: IDnd5eApiReference;

@@ -1,4 +1,4 @@
-import { Button, Input, InputNumber, Row, Space } from 'antd';
+import { Button, Input, InputNumber, Row } from 'antd';
 import React, { FunctionComponent } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsBoxArrowRight } from 'react-icons/bs';

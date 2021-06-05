@@ -1,4 +1,4 @@
-import React, { useState, Dispatch } from 'react';
+import { Dispatch, useState } from 'react';
 
 function useLocalStorage<T>(key: string, initialValue: T): [T, Dispatch<T>] {
     const [storedValue, setStoredValue] = useState<T>(() => {
