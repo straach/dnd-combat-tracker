@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, Divider, Layout, Row, Space } from 'antd';
+import { Button, Checkbox, Col, Divider, Layout, Row, Space, Typography } from 'antd';
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import './App.css';
@@ -11,6 +11,7 @@ import { IActionableCharacter } from './models/ActionableCharacter';
 import Encounter, { IEncounterData } from './models/Encounter';
 import { IObscureDataContext, ObscureDataContext } from './obscure-data-context';
 
+const { Title } = Typography;
 const { Header, Content } = Layout;
 const Main = styled.div`
   width: 80%;
@@ -65,9 +66,9 @@ function Game() {
   return (<Layout style={{ minHeight: '100%', height: '100%' }}>
     <Header className="header" style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
       <Row justify="space-between">
-        <Col span={5}>
-          DnD Combat Tracker
-      </Col>
+        <Col span={6}>
+          <Title level={3} style={{ color: 'white', marginTop: 13  }}>DnD Combat Tracker</Title>
+        </Col>
         <Col>
           <Space>
             Round: {encounter.round} Time: {encounter.timePassed}
