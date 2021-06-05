@@ -1,9 +1,11 @@
-import { Button, Row, Col, Divider } from 'antd';
+import { Button, Row, Col, Divider, Typography } from 'antd';
 import React from 'react';
 import { uuid } from 'uuidv4';
 import useLocalStorage from '../hooks/useLocalStorageHook';
 import Player, { IPlayer } from '../models/Player';
 import PlayerInTeam from './PlayerInTeam';
+
+const { Title } = Typography;
 
 interface IPlayerList {
     onJoinEncounter: (players: Player) => void
@@ -31,6 +33,7 @@ export default function PlayerList({ onJoinEncounter }: IPlayerList) {
         setPlayers(newPlayerList);
     }
     return (<>
+        <Divider />
         <div>{
             players.map((player, index) => <PlayerInTeam
                 key={`${index}${players.length}`}
@@ -41,7 +44,9 @@ export default function PlayerList({ onJoinEncounter }: IPlayerList) {
         }
         </div>
         <Divider />
-        <Button onClick={handleAddNewPlayer}>Add Player</Button>
+        <Row ><Col span={3}>
+            <Button onClick={handleAddNewPlayer}>Add new player</Button>
+        </Col></Row>
     </>
 
     );

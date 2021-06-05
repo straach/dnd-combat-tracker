@@ -97,13 +97,13 @@ const ExpandableCharacterBox = ({ isPlayer = false, hasHealthStats, hit_points, 
                 CONTENT_HEIGHT + ARROW_TOGGLE_HEIGHT, ...style
     }}>
 
-        <HealthStatus
+        {hasHealthStats && <HealthStatus
             span={1}
             hit_points={hit_points}
             max_hit_points={max_hit_points}
             hasHealthStats={hasHealthStats}
             isPlayer={isPlayer}
-        />
+        />}
         <StyledAttributes span={hasHealthStats ? 23 : 24} style={{ height: '100%', marginTop: 5 }}>
             {children}
 

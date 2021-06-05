@@ -84,7 +84,7 @@ function Game() {
       </Row>
     </Header>
 
-    <Sidebar >
+    <Sidebar title={'Players in Adventure'}>
       <PlayerList
         onJoinEncounter={handleJoinEncounter}
       />
@@ -119,7 +119,7 @@ function Game() {
         }
       </Main>
     </Content>
-    <Sidebar isMonster={true} align="right" >
+    <Sidebar title={'Add Monster to Encounter'} isMonster={true} align="right" >
       <MonsterList onJoinEncounter={handleMultijoinEncounter} />
     </Sidebar>
   </Layout >);

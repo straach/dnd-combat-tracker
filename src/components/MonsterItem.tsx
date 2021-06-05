@@ -1,15 +1,14 @@
-import { Button, Popover, Col, Row, InputNumber } from 'antd';
+import { Button, InputNumber, Popover, Row } from 'antd';
+import { cloneDeep } from 'lodash';
 import React, { useState } from 'react';
 import { BsBoxArrowLeft } from 'react-icons/bs';
 import { IoMdListBox } from "react-icons/io";
 import IBaseMonster from '../models/IBaseMonster';
-import IMonster from '../models/Monster';
+import { default as IMonster, default as Monster } from '../models/Monster';
 import { getMonster } from '../resources/dndapi';
+import ExpandableCharacterBox from './ExpandableCharacterBox';
 import StatsBlockWide from './stats-block/StatsBlockWide';
-import { cloneDeep } from 'lodash';
-import Player from '../models/Player';
-import Monster from '../models/Monster';
-
+const { Col } = ExpandableCharacterBox;
 
 interface IMonsterItemProps {
     monster: IBaseMonster;
@@ -47,20 +46,32 @@ const MonsterItem = ({ monster, onJoinEncounter }: IMonsterItemProps) => {
         onJoinEncounter(stats);
         setAmount(1);
     }
-    return <Row style={{ width: '100%', backgroundColor: 'white', margin: '10px 0px' }}>
-        <Col>
-            <Button onClick={handleJoinPress} ><BsBoxArrowLeft size={30} /></Button>
-            <InputNumber min={0} value={amount} onChange={setAmount} /> x
-            <InputNumber min={0} value={iniciative} onChange={setIniciative} />iniciative
-            <Popover
-                visible={show}
-                onVisibleChange={handleOnVisibleChange}
-                content={<>{show && <StatsBlockWide monster={fullStats} />}</>} placement="left">
-                <IoMdListBox size={40} />
-            </Popover>
-            {monster.name} {monster.size} {monster.type} {monster.hit_points}
-        </Col>
-    </Row>
+    return <ExpandableCharacterBox
+        hasHealthStats={false}>
+        <Row style={{ fontSize: 12, margin: '0px 10px 0px 15px' }}>
+            <Col span={2}>
+                <Button onClick={handleJoinPress} size="large"><BsBoxArrowLeft size={30} /></Button>
+            </Col>
+            <Col offset={1} span={4}>
+                Amount:  <InputNumber min={0} value={amount} onChange={setAmount} />
+
+            </Col>
+            <Col offset={1} span={4}>
+                iniciative: <InputNumber min={0} value={iniciative} onChange={setIniciative} />
+            </Col>
+            <Col offset={1} span={4}>
+                <Popover
+                    visible={show}
+                    onVisibleChange={handleOnVisibleChange}
+                    content={<>{show && <StatsBlockWide monster={fullStats} />}</>} placement="left">
+                    <IoMdListBox size={40} />
+                </Popover>
+            </Col>
+            <Col span={6}>
+                {monster.name} {monster.size} {monster.type} {monster.hit_points}
+            </Col>
+        </Row>
+    </ExpandableCharacterBox >
 }
 
 export default MonsterItem;

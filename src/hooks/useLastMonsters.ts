@@ -5,6 +5,10 @@ import useLocalStorage from "./useLocalStorageHook";
 const useLastMonsters = (maximum: number) => {
     const [lastMonsters, setLastMonsters] = useLocalStorage<IBaseMonster[]>('lastMonsters', [] as IBaseMonster[]);
     const pushMonster = (add: IMonster) => {
+        if (lastMonsters.some(monster =>
+            monster.name === add.name)) {
+            return;
+        }
         if (lastMonsters.length === maximum) {
             lastMonsters.shift();
         }
