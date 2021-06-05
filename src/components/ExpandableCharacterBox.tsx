@@ -86,13 +86,15 @@ interface IExpandableCharacterBox extends IHealthStatusProps {
 const CONTENT_HEIGHT = 55;
 const ARROW_TOGGLE_HEIGHT = 15;
 const COMMENT_HEIGHT = 70;
+
 const ExpandableCharacterBox = ({ isPlayer = false, hasHealthStats, hit_points, max_hit_points, children, collapsedArea = false, style = {} }: IExpandableCharacterBox) => {
 
     const [collapse, setCollapse] = useState(false);
     return (<Box style={{
-        height: collapse ?
-            CONTENT_HEIGHT + COMMENT_HEIGHT + ARROW_TOGGLE_HEIGHT :
-            CONTENT_HEIGHT + ARROW_TOGGLE_HEIGHT, ...style
+        height: !collapsedArea ? CONTENT_HEIGHT :
+            collapse ?
+                CONTENT_HEIGHT + COMMENT_HEIGHT + ARROW_TOGGLE_HEIGHT :
+                CONTENT_HEIGHT + ARROW_TOGGLE_HEIGHT, ...style
     }}>
 
         <HealthStatus
@@ -102,7 +104,7 @@ const ExpandableCharacterBox = ({ isPlayer = false, hasHealthStats, hit_points, 
             hasHealthStats={hasHealthStats}
             isPlayer={isPlayer}
         />
-        <StyledAttributes span={hasHealthStats ? 23 : 24} style={{ height: '100%', marginTop: 10 }}>
+        <StyledAttributes span={hasHealthStats ? 23 : 24} style={{ height: '100%', marginTop: 5 }}>
             {children}
 
             {collapsedArea &&

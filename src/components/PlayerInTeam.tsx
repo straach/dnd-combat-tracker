@@ -18,24 +18,24 @@ const PlayerInTeam: FunctionComponent<IPlayerInputProps> = ({ value, onChange, o
     return <ExpandableCharacterBox
         hasHealthStats={false}
     >
-        <Row style={{ fontSize: 12, marginLeft: 10, marginTop: 5 }}>
+        <Row style={{ fontSize: 12, margin: '0px 10px 0px 15px' }}>
             <Col span={6}>
                 <Input value={value.name} placeholder="Name" onChange={(event) => onChange({ ...value, name: event.target.value })} />
             </Col>
             <Col offset={1} span={3}>
                 Armor Class: <InputNumber value={value.armor_class} onChange={(number) => onChange({ ...value, armor_class: number })} />
             </Col>
-            <Col offset={1} span={3}>
+            <Col offset={1} span={4}>
                 Passive Perception: <InputNumber value={value.passivePerception} onChange={(number) => onChange({ ...value, passivePerception: number })} />
             </Col>
             <Col offset={1} span={3}>
                 Iniciative: <InputNumber value={value.iniciative} onChange={(number) => onChange({ ...value, iniciative: number })} />
             </Col>
-            <Col offset={2} span={3} style={{ display: 'flex', justifyContent: 'end' }}>
-                <Space>
-                    <Button onClick={onRemove} ><AiOutlineDelete size={30} /></Button>
-                    <Button onClick={() => onJoinEncounter(value)} ><BsBoxArrowRight size={30} /></Button>
-                </Space>
+            <Col offset={1} span={3} >
+                <div style={{ display: 'flex' }} >
+                    <Button onClick={onRemove} size="large"><AiOutlineDelete size={30} /></Button>
+                    <Button style={{ marginLeft: 5 }} size="large" onClick={() => onJoinEncounter(value)} ><BsBoxArrowRight size={30} /></Button>
+                </div>
             </Col>
         </Row>
     </ExpandableCharacterBox>

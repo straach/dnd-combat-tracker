@@ -1,4 +1,4 @@
-import { Button } from 'antd';
+import { Button, Row, Col, Divider } from 'antd';
 import React from 'react';
 import { uuid } from 'uuidv4';
 import useLocalStorage from '../hooks/useLocalStorageHook';
@@ -40,6 +40,7 @@ export default function PlayerList({ onJoinEncounter }: IPlayerList) {
                 onJoinEncounter={handleJoinEncounter} />)
         }
         </div>
+        <Divider />
         <Button onClick={handleAddNewPlayer}>Add Player</Button>
     </>
 
