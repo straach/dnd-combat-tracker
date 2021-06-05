@@ -33,8 +33,8 @@ const PlayerInTeam: FunctionComponent<IPlayerInputProps> = ({ value, onChange, o
             </Col>
             <Col offset={1} span={3} >
                 <div style={{ display: 'flex' }} >
-                    <Button onClick={onRemove} size="large"><AiOutlineDelete size={30} /></Button>
-                    <Button style={{ marginLeft: 5 }} size="large" onClick={() => onJoinEncounter(value)} ><BsBoxArrowRight size={30} /></Button>
+                    <Button onClick={onRemove} size="large" title="Delete from team"><AiOutlineDelete size={30} /></Button>
+                    <Button style={{ marginLeft: 5 }} size="large" onClick={() => onJoinEncounter(value)} title="Join encounter" ><BsBoxArrowRight size={30} /></Button>
                 </div>
             </Col>
         </Row>

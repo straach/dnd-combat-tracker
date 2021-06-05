@@ -73,11 +73,11 @@ function Game() {
           <Space>
             Round: {encounter.round} Time: {encounter.timePassed}
             <Checkbox checked={isObscured} onChange={toggleIsObscured} /> Obscure Data
-            <Button onClick={handleToggleStartEncounter}>{encounter.isStarted ? 'End' : 'Start'}</Button>
-            <Button onClick={handleClearEncounter} disabled={encounter.isStarted}>Clear</Button>
+            <Button title="Start or Stop encounter" onClick={handleToggleStartEncounter}>{encounter.isStarted ? 'End' : 'Start'}</Button>
+            <Button title="Clear encounter from all participants" onClick={handleClearEncounter} disabled={encounter.isStarted}>Clear</Button>
             <><Divider type="vertical"></Divider>
-              <Button onClick={() => handlePrevTurn()} disabled={!encounter.isStarted}>prev</Button>
-              <Button onClick={() => handleNextTurn()} disabled={!encounter.isStarted} type="primary">next</Button>
+              <Button title="Give turn to previous player" onClick={() => handlePrevTurn()} disabled={!encounter.isStarted}>prev</Button>
+              <Button title="Give turn to next player"  onClick={() => handleNextTurn()} disabled={!encounter.isStarted} type="primary">next</Button>
             </>
           </Space>
         </Col>

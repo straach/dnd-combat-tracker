@@ -50,7 +50,7 @@ const MonsterItem = ({ monster, onJoinEncounter }: IMonsterItemProps) => {
         hasHealthStats={false}>
         <Row style={{ fontSize: 12, margin: '0px 10px 0px 15px' }}>
             <Col span={2}>
-                <Button onClick={handleJoinPress} size="large"><BsBoxArrowLeft size={30} /></Button>
+                <Button onClick={handleJoinPress} size="large" title="Join encounter"><BsBoxArrowLeft size={30} /></Button>
             </Col>
             <Col offset={1} span={1}>
                 <Popover
