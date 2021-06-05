@@ -3,8 +3,6 @@ import IMonster from '../../models/Monster';
 import StyledStatsContainer from './StatsBlockWideStyled';
 import { StatsSectionLeft } from './StatsSectionLeft';
 import { StatsSectionRight } from './StatsSectionRight';
-// https://codepen.io/retractedhack/pen/gPLpWe
-// https://react-icons.github.io/react-icons/search?q=delete
 
 export interface IStasBlockWideProps {
     monster?: IMonster;
