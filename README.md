@@ -44,3 +44,4 @@ Happy game!
 * https://react-icons.github.io/react-icons/search?q=aid for the icons
 * https://codepen.io/retractedhack/pen/gPLpWe for the layout of the statsblock
 * https://usehooks.com/useLocalStorage/ for the localStorage hook
+* https://github.com/simonwhitaker/github-fork-ribbon-css Github fork ribbon

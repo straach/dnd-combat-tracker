@@ -14,6 +14,7 @@
     "antd": "^4.15.5",
     "axios": "^0.21.1",
     "axios-cache-adapter": "^2.7.3",
+    "github-fork-ribbon-css": "^0.2.3",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.2",

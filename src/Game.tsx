@@ -66,6 +66,10 @@ function Game() {
   return (<Layout style={{ minHeight: '100%', height: '100%' }}>
     <Header className="header" style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
       <Row justify="space-between">
+        {!encounter.isStarted && <a className="github-fork-ribbon left-bottom fixed"
+          href="https://github.com/straach/dnd-combat-tracker"
+          data-ribbon="Fork me on GitHub"
+          title="Fork me on GitHub">Fork me on GitHub</a>}
         <Col span={6}>
           <Title level={3} style={{ color: 'white', marginTop: 13 }}>DnD Combat Tracker</Title>
         </Col>
@@ -77,7 +81,7 @@ function Game() {
             <Button title="Clear encounter from all participants" onClick={handleClearEncounter} disabled={encounter.isStarted}>Clear</Button>
             <><Divider type="vertical"></Divider>
               <Button title="Give turn to previous player" onClick={() => handlePrevTurn()} disabled={!encounter.isStarted}>prev</Button>
-              <Button title="Give turn to next player"  onClick={() => handleNextTurn()} disabled={!encounter.isStarted} type="primary">next</Button>
+              <Button title="Give turn to next player" onClick={() => handleNextTurn()} disabled={!encounter.isStarted} type="primary">next</Button>
             </>
           </Space>
         </Col>
