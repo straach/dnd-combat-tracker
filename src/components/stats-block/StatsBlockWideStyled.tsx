@@ -101,10 +101,10 @@ const StyledStatsContainer = styled.div`
     padding-left: 1.1em;
     line-height: 1.4em;
   }
-  .property-line.first{
+  .property-line:first-child{
     margin: 8px 0 0
   }
-  .property-line.last{
+  .property-line:last-child{
     margin: 0 0 10px;
   }
   .abilities{

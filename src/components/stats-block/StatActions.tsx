@@ -15,7 +15,7 @@ function StatActions(props: IActionsProps) {
     return (
         <div className="actions">
             <h3>{title}</h3>
-            {value.map(action => <NameDescItem value={action} />)}
+            {value.map((action, index) => <NameDescItem key={index} value={action} />)}
         </div>
     );
 }

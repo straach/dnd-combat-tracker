@@ -1,6 +1,6 @@
 import { Button, Row, Col, Divider } from 'antd';
 import React from 'react';
-import { uuid } from 'uuidv4';
+import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from '../hooks/useLocalStorageHook';
 import Player, { IPlayer } from '../models/Player';
 import PlayerInTeam from './PlayerInTeam';
@@ -28,7 +28,7 @@ export default function PlayerList({ onJoinEncounter }: IPlayerList) {
     }
     const handleAddNewPlayer = () => {
         const newPlayerList = [...players];
-        newPlayerList.push({ uuid: uuid(), name: '', hit_points: 1, iniciative: 0, conditions: [] });
+        newPlayerList.push({ uuid: uuidv4(), name: '', hit_points: 1, iniciative: 0, conditions: [] });
         setPlayers(newPlayerList);
     }
     return (<>

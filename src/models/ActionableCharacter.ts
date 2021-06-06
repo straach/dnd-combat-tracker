@@ -1,6 +1,6 @@
 import ICharacter from "./ICharacter";
 import ICharacterActions from "./ICharacterActions";
-import { uuid as createUuid } from 'uuidv4';
+import { v4 as createUuid } from 'uuid';
 import IUnique from "./IUnique";
 
 export interface IActionableCharacter extends ICharacterActions, ICharacter, IUnique {
