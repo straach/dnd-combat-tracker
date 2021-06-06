@@ -1,4 +1,3 @@
-import { isEmpty } from 'lodash';
 import React from 'react';
 import IDnd5eApiReference from "../models/IDnd5eApiReference";
 
