@@ -4,7 +4,7 @@ import { IObscureDataContext, ObscureDataContext } from '../obscure-data-context
 
 const PopoverContent = ({ title, value, onChange, units }: IStatItem) => {
     return <Card title={title} bordered={false} >
-        <InputNumber size="large" value={value} onChange={onChange} style={{ width: 50 }} /> {units}
+        <InputNumber size="large" value={value} onChange={onChange} style={{ width: 55 }} /> {units}
     </Card>
 
 }
@@ -18,10 +18,20 @@ const StatItem = ({ title, value, units, onChange }: IStatItem) => {
     const { isObscured } = useContext<IObscureDataContext>(ObscureDataContext);
     return (<div style={{ marginLeft: 10, textAlign: 'center', fontSize: 16, width: 170 }}>
         {isObscured ? <span style={{ cursor: 'pointer' }}>
-            <Popover content={<PopoverContent title={title} value={value} units={units} onChange={onChange} />} >
+            <Popover
+                content={<PopoverContent
+                    title={title}
+                    value={value}
+                    units={units}
+                    onChange={onChange} />} >
                 {title}
             </Popover> </span> :
-            <>{title}: <InputNumber size="small" value={value} onChange={onChange} style={{ width: 50, marginLeft: 10 }} /> {units}</>
+            <>{title}: <InputNumber
+                size="small"
+                value={value}
+                onChange={onChange}
+                style={{ width: 50, marginLeft: 5 }}
+            /> {units}</>
         }
     </div >);
 }
