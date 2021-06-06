@@ -59,6 +59,6 @@ export function StatsSectionLeft(props: IStatsSectionLeftProps) {
             <TopStatsSeparator />
 
             {(monster?.special_abilities || [])
-                .map(ability => <NameDescItem value={ability} />)}
+                .map((ability, index) => <NameDescItem key={index} value={ability} />)}
         </>);
 }

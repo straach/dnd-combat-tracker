@@ -7,7 +7,7 @@ export interface IPropertyProps {
 }
 
 export default function Property({ title, children }: IPropertyProps) {
-    if (isEmpty(children)) return null;
+    if (isEmpty(children) && children != null) return null;
     return (
         <div className="property-line">
             <h4>{title}: </h4>
