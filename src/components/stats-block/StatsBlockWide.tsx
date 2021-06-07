@@ -26,10 +26,14 @@ export default function StatsBlockWide({ monster }: IStasBlockWideProps) {
                     <StatsSectionRight monster={monster} />
                 </div>
                 <div style={{ marginTop: 20, textDecoration: 'italic' }}>
-                    Content from the <a
-                        href="https://dnd.wizards.com/articles/features/systems-reference-document-srd">SRD</a> and published
+                    Content from the <a 
+                        target="_blank"
+                        href="https://dnd.wizards.com/articles/features/systems-reference-document-srd">SRD</a> and
+                        published
                 under
-                the <a href="./opengaminglicense.pdf">Open Gaming License</a>.
+                the <a
+                        target="_blank"
+                        href="./opengaminglicense.pdf">Open Gaming License</a>.
                 </div>
                 <hr className="orange-border bottom" />
             </div>
