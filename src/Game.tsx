@@ -14,7 +14,7 @@ import Encounter, { IEncounterData } from './models/Encounter';
 import { IObscureDataContext, ObscureDataContext } from './obscure-data-context';
 
 const { Title } = Typography;
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 const Main = styled.div`
   width: 80%;
   height: 100%;
@@ -138,7 +138,7 @@ function Game() {
           </>
         }
       </Main>
-      <LicenseFooter />
+      {!encounter.isStarted && <LicenseFooter />}
     </Content >
     <Sidebar
       title={'Add Monster to Encounter'}

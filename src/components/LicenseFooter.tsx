@@ -1,4 +1,4 @@
-import { Col, Modal, Row, Button, Divider } from 'antd';
+import { Button, Divider, Modal } from 'antd';
 import React, { useState } from 'react';
 import { AiOutlineInfoCircle } from 'react-icons/ai';
 
