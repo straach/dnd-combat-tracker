@@ -10,7 +10,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 ## Open Gaming License
 
 All Monster stats content, as well as the conditions for players and monsters,
-are based on data provided by the Open Gaming License by Wizards of the coast.
+are based on data provided by Wizards of the cost and fall under the Open Gaming License.
 Detailed information regarding this license can be found [here](https://dnd.wizards.com/articles/features/systems-reference-document-srd) 
 
 A copy of the license can be seen in the folder inside this repository `./public/opengaminglicense.pdf`.
