@@ -4,6 +4,7 @@ import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import './App.css';
 import CharacterInEncounter from './components/CharacterInEncounter';
+import LicenseFooter from './components/LicenseFooter';
 import { MonsterList } from './components/MonsterList';
 import PlayerList from './components/PlayerList';
 import Sidebar from './components/Sidebar';
@@ -13,7 +14,7 @@ import Encounter, { IEncounterData } from './models/Encounter';
 import { IObscureDataContext, ObscureDataContext } from './obscure-data-context';
 
 const { Title } = Typography;
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 const Main = styled.div`
   width: 80%;
   height: 100%;
@@ -137,6 +138,9 @@ function Game() {
           </>
         }
       </Main>
+      <Footer>
+        <LicenseFooter />
+      </Footer>
     </Content >
     <Sidebar
       title={'Add Monster to Encounter'}
