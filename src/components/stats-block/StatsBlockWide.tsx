@@ -28,11 +28,13 @@ export default function StatsBlockWide({ monster }: IStasBlockWideProps) {
                 <div style={{ marginTop: 20, textDecoration: 'italic' }}>
                     Content from the <a 
                         target="_blank"
+                        rel="noreferrer"
                         href="https://dnd.wizards.com/articles/features/systems-reference-document-srd">SRD</a> and
                         published
                 under
                 the <a
                         target="_blank"
+                        rel="noreferrer"
                         href="./opengaminglicense.pdf">Open Gaming License</a>.
                 </div>
                 <hr className="orange-border bottom" />

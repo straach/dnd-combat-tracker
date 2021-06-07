@@ -34,10 +34,17 @@ export default function LicenseFooter(props: ILicenseFooterProps) {
                 <br /><br />
                 All Monster stats content, as well as the conditions for players and monsters,
                 are based on data provided by Wizards of the cost and fall under the Open Gaming License.
-            Detailed information regarding this license can be found <a target="_blank" 
-             href="https://dnd.wizards.com/articles/features/systems-reference-document-srd">here</a>.
+            Detailed information regarding this license can be found <a
+                    target="_blank"
+                    href="https://dnd.wizards.com/articles/features/systems-reference-document-srd"
+                    rel="noreferrer"
+                >here</a>.
             <br /><br />
-            A copy of the license can be viewed <a target="_blank" href="./opengaminglicense.pdf">here</a>.
+            A copy of the license can be viewed <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="./opengaminglicense.pdf"
+                >here</a>.
 
         </Modal>
         </>
