@@ -138,9 +138,7 @@ function Game() {
           </>
         }
       </Main>
-      <Footer>
-        <LicenseFooter />
-      </Footer>
+      <LicenseFooter />
     </Content >
     <Sidebar
       title={'Add Monster to Encounter'}

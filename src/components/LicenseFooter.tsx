@@ -9,14 +9,12 @@ export default function LicenseFooter(props: ILicenseFooterProps) {
     const [showModal, setShowModal] = useState<boolean>(false);
     return (
         <>
-            <Row justify="end">
-                <Col>
-                    <AiOutlineInfoCircle
-                        size={40}
-                        style={{ cursor: 'pointer' }}
-                        onClick={() => setShowModal(true)} />
-                </Col>
-            </Row>
+            <div style={{ position: 'fixed', right: 10, bottom: 10 }}>
+                <AiOutlineInfoCircle
+                    size={40}
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => setShowModal(true)} />
+            </div>
             <Modal
                 footer={<Button onClick={() => setShowModal(false)}>Ok</Button>}
                 onCancel={() => setShowModal(false)}
