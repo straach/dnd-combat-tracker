@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, isNumber } from 'lodash';
 import React from 'react';
 
 export interface IPropertyProps {
@@ -7,7 +7,7 @@ export interface IPropertyProps {
 }
 
 export default function Property({ title, children }: IPropertyProps) {
-    if (isEmpty(children) && children == null) return null;
+    if (!isNumber(children) && children != null && isEmpty(children)) return null;
     return (
         <div className="property-line">
             <h4>{title}: </h4>
