@@ -28,10 +28,11 @@ export default function LicenseFooter(props: ILicenseFooterProps) {
                 <br /><br />
                 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                 <Divider >Open Gaming License</Divider>
-                Open Gaming License
-                <br /><br />
                 All Monster stats content, as well as the conditions for players and monsters,
-                are based on data provided by Wizards of the cost and fall under the Open Gaming License.
+                are based on creative content by Wizards of the cost, fetched via <a
+                    target="_blank"
+                    href="http://www.dnd5eapi.co/"
+                    rel="noreferrer">dnd5eapi.co</a> and fall under the Open Gaming License and NOT under the MIT License.
             Detailed information regarding this license can be found <a
                     target="_blank"
                     href="https://dnd.wizards.com/articles/features/systems-reference-document-srd"
