@@ -1,10 +1,10 @@
-import { Card, InputNumber, Popover } from 'antd';
-import React, { useContext } from 'react';
-import { IObscureDataContext, ObscureDataContext } from '../obscure-data-context';
+import { Card, Popover } from 'antd';
+import React from 'react';
+import { TouchValueChange } from './TouchValueChange';
 
 const PopoverContent = ({ title, value, onChange, units }: IStatItem) => {
     return <Card title={title} bordered={false} >
-        <InputNumber size="large" value={value} onChange={onChange} style={{ width: 55 }} /> {units}
+        <TouchValueChange size="large" value={value} onChange={onChange} style={{ width: 55 }} /> {units}
     </Card>
 
 }
@@ -14,10 +14,9 @@ interface IStatItem {
     units: string;
     onChange: (newVal: number) => void;
 }
-const StatItem = ({ title, value, units, onChange }: IStatItem) => {
-    const { isObscured } = useContext<IObscureDataContext>(ObscureDataContext);
+const StatItem = ({ title, value, units, onChange, isOnHoverView }: IStatItem & {isOnHoverView: boolean}) => {
     return (<div style={{ marginLeft: 10, textAlign: 'center', fontSize: 16, width: 170 }}>
-        {isObscured ? <span style={{ cursor: 'pointer' }}>
+        {isOnHoverView ? <span style={{ cursor: 'pointer' }}>
             <Popover
                 content={<PopoverContent
                     title={title}
@@ -26,12 +25,12 @@ const StatItem = ({ title, value, units, onChange }: IStatItem) => {
                     onChange={onChange} />} >
                 {title}
             </Popover> </span> :
-            <>{title}: <InputNumber
+            <>{title}:<br/> <TouchValueChange
                 size="small"
                 value={value}
                 onChange={onChange}
                 style={{ width: 50, marginLeft: 5 }}
-            /> {units}</>
+            /> </>
         }
     </div >);
 }

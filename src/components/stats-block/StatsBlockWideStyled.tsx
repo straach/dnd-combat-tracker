@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledStatsContainer = styled.div`
-  transform: scale(0.7, 0.7);
+  transform: scale(0.9, 0.9);
   .stat-block {
     text-align: left;
     margin: 0px;

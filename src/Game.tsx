@@ -112,7 +112,7 @@ function Game() {
 
         {encounter.aliveCharacters.length > 0 &&
           <><Divider plain>Active</Divider><div>
-            {encounter.aliveCharacters.map((char: IActionableCharacter, index: number) =>
+            {encounter.characters.map((char: IActionableCharacter, index: number) =>
               <CharacterInEncounter
                 isActive={encounter.isStarted}
                 key={`${char.name}+${index}`}
@@ -122,21 +122,6 @@ function Game() {
                 onRemove={() => handleLeaveEncounter(char)}
               />)}
           </div></>}
-
-        {encounter.deadCharacters.length > 0 &&
-          <><Divider plain>Dead</Divider>
-            <div>
-              {encounter.deadCharacters.map((char: IActionableCharacter, index: number) => <CharacterInEncounter
-                isActive={encounter.isStarted}
-                key={`${char.name}+${index}`}
-                value={char}
-                hasTurn={false}
-                onChange={handleUpdatePlayerInEncounter}
-                onRemove={() => handleLeaveEncounter(char)}
-              />)}
-            </div>
-          </>
-        }
       </Main>
       {!encounter.isStarted && <LicenseFooter />}
     </Content >

@@ -1,5 +1,5 @@
-import { Button, Col, Divider, Input, Popover, Row } from 'antd';
-import React from 'react';
+import { Button, Col, Divider, Input, Popover, Row , Modal} from 'antd';
+import React, { useContext, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { BsPersonFill } from 'react-icons/bs';
 import { GiDeathSkull, GiEvilMinion } from "react-icons/gi";
@@ -7,10 +7,12 @@ import { ImAidKit } from 'react-icons/im';
 import { IoMdListBox } from "react-icons/io";
 import { IActionableCharacter } from '../models/ActionableCharacter';
 import Monster from '../models/Monster';
+import { IObscureDataContext, ObscureDataContext } from '../obscure-data-context';
 import Conditions from './Condition';
 import ExpandableCharacterBox from './ExpandableCharacterBox';
 import StatItem from './StatItem';
 import StatsBlockWide from './stats-block/StatsBlockWide';
+
 
 const { Col: CenteredCol } = ExpandableCharacterBox;
 
@@ -55,6 +57,8 @@ interface IEncounterCharacter {
 }
 
 const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: IEncounterCharacter) => {
+    const { isObscured } = useContext<IObscureDataContext>(ObscureDataContext);
+    const [hoverVisible, setHoverVisible] = useState<boolean>(false);
     const handleHitPointsChange = (hitPoints: number) => {
         value.changeHitPoints(hitPoints);
         onChange(value);
@@ -68,6 +72,11 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
         value.changeConditions(conditions);
         onChange(value);
     }
+    const handleIniciativeChange = (iniciative: number) => {
+        value.changeIniciative(iniciative);
+        onChange(value);
+    }
+    
     const isMonster = value instanceof Monster;
     return (<ExpandableCharacterBox
         hasHealthStats={true}
@@ -93,18 +102,24 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
             <Col span={22}>
                 <Row style={{ height: '100%' }}>
                     <CenteredCol span={8}>
-                        {value.name}  <Divider type="vertical" />{value.iniciative}
+                        {value.name}  <Divider type="vertical" />
+                        <StatItem
+                            title={`Iniciative: ${value.iniciative}`}
+                            value={value.iniciative}
+                            units=""
+                            onChange={handleIniciativeChange}
+                            isOnHoverView={true} />
                         {isMonster && <>
-                            <Divider type="vertical"></Divider><Popover
-                                content={<StatsBlockWide monster={value as Monster} />}>
-                                <IoMdListBox title="stats" size={35} />
-                            </Popover></>}
+                            <Divider type="vertical"></Divider>
+                      
+                                <IoMdListBox onClick={() => setHoverVisible(true)} title="stats" size={35} />
+                         </>}
                     </CenteredCol>
                     <CenteredCol span={7} >
                         <Conditions conditions={value.conditions} onChange={handleConditionChange} />
                     </CenteredCol>
                     <CenteredCol span={7} >
-                        {isMonster && <StatItem title="Health" value={value.hit_points || 0} units={'HP'} onChange={handleHitPointsChange} />}
+                        {isMonster && <StatItem title="Health" value={value.hit_points || 0} units={'HP'} onChange={handleHitPointsChange} isOnHoverView={isObscured} />}
                     </CenteredCol>
                     <CenteredCol span={1}>
                         <QuickActionButton
@@ -120,7 +135,13 @@ const CharacterInEncounter = ({ value, hasTurn, isActive, onRemove, onChange }: 
         </Row>
 
 
-
+        <Modal
+        title="Modal 1000px width"
+        visible={hoverVisible}
+        onCancel={() => setHoverVisible(false)}
+        footer={null}
+        modalRender={() => <StatsBlockWide monster={value as Monster} />}
+      />
     </ExpandableCharacterBox>
     );
 }

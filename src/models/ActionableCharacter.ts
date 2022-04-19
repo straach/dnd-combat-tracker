@@ -48,6 +48,10 @@ class ActionableCharacter implements IActionableCharacter {
     changeConditions(conditions: string[]) {
         this.conditions = conditions;
     };
+    changeIniciative (iniciative: number) {
+        this.iniciative = iniciative;
+    };
+
 
     get isAlive() {
         return this.hit_points > 0;
